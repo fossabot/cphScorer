@@ -1,0 +1,29 @@
+{
+  "name": "@cph-scorer/core",
+  "version": "1.0.0-alpha.0",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "author": "corentin-verquin",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "format": "ts-standard --report stylish --fix src",
+    "compile": "tsc -b --verbose",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.12.15",
+    "@babel/preset-env": "^7.12.16",
+    "@babel/preset-typescript": "^7.12.16",
+    "@types/jest": "^26.0.20",
+    "babel": "^6.23.0",
+    "babel-jest": "^26.6.3",
+    "jest": "^26.6.3",
+    "ts-node": "^9.1.1",
+    "ts-standard": "^10.0.0",
+    "typescript": "^4.1.5"
+  },
+  "dependencies": {
+    "@cph-scorer/model": "^1.0.0-alpha.0"
+  }
+}
