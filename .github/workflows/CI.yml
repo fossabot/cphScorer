@@ -1,0 +1,35 @@
+name: Test & Lint
+
+on: [push]
+
+jobs:
+  test-lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@main
+        with:
+          fetch-depth: 2          
+
+      - name: Setup node env 🏗
+        uses: actions/setup-node@v2.1.4
+        with:
+          node-version: 14
+
+      - name: Cache node_modules 📦
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}    
+          restore-keys: |
+            ${{ runner.os }}-modules-      
+
+      - name: Install dependencies 👨🏻‍💻
+        run: yarn run bootstrap || npx lerna bootstrap
+
+      - name: Run linter 👀
+        run: ./tools/script-runner.js format HEAD        
+
+      - name: Run tests 🧪
+        run: ./tools/script-runner.js test HEAD
