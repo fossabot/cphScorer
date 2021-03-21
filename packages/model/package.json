@@ -8,7 +8,8 @@
   "private": true,
   "scripts": {
     "format": "ts-standard --report stylish --fix src",
-    "compile": "tsc -b --verbose"
+    "compile": "tsc -b --verbose",
+    "pre-commit": "npx --no-install lint-staged"
   },
   "devDependencies": {
     "ts-standard": "^10.0.0",

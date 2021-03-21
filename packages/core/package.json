@@ -9,7 +9,8 @@
   "scripts": {
     "format": "ts-standard --report stylish --fix src",
     "compile": "tsc -b --verbose",
-    "test": "jest"
+    "test": "jest",
+    "pre-commit": "npx --no-install lint-staged"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.12.15",
