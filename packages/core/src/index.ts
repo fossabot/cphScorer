@@ -11,6 +11,8 @@ export * from './use-cases/player/listRegisterPlayer'
 
 export * from './use-cases/tournament/registerPlayer'
 export * from './use-cases/tournament/generateRound'
+export * from './use-cases/tournament/getRound'
+export * from './use-cases/tournament/updateScore'
 
 export * from './errors/PlayerUnknow'
 export * from './errors/MaxCallError'

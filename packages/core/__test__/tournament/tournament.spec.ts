@@ -1,5 +1,6 @@
-import { PlayerProvider, RankingProvider, RegisterPlayer, PlayerUnknowException } from "../../src"
-import { Ranking, RankingType, Player } from "../../../model/src"
+import { PlayerProvider, RankingProvider, RegisterPlayer, PlayerUnknowException, TeamProvider, UpdateScore } from "../../src"
+import { Ranking, Team, RankingType, Player } from "../../../model/src"
+import { Match } from "@cph-scorer/model"
 
 class mockPlayerProvider implements PlayerProvider {
   private players = [
@@ -21,11 +22,33 @@ class mockPlayerProvider implements PlayerProvider {
 
 }
 
+class mockTeamProvider implements TeamProvider {
+  public teams = [
+    new Team({ id: '1', score: 0, players: [new Player({ id: '1' })] }),
+    new Team({ id: '2', score: 0, players: [new Player({ id: '3' })] }),
+  ]
+
+  insert: (player: Player[]) => Promise<Team>
+  async update(id: string, score: number): Promise<Team> {    
+    const t = this.teams.find(t => t.id === id)
+    t.score = score
+    return t
+  }
+
+}
+
 class mockRanginkProvider implements RankingProvider {
   public rankings = [
     new Ranking({
       id: '1',
       players: [new Player({ id: '1' })],
+      point: 10,
+      goalAverage: 10,
+      participation: 1
+    }),
+    new Ranking({
+      id: '3',
+      players: [new Player({ id: '3' })],
       point: 10,
       goalAverage: 10,
       participation: 1
@@ -67,12 +90,12 @@ describe('Torunament use case', () => {
       return useCase.exec('00', RankingType.SEN).catch(e => expect(e).toBeInstanceOf(PlayerUnknowException))
     })
 
-    it('Register new player', async (done) => {      
+    it('Register new player', async (done) => {
       await useCase.exec('0', RankingType.SEN)
-      
+
       const r = rank.rankings.find(x => x.id === '2')
-      
-      expect(rank.rankings.length).toBe(2)      
+
+      expect(rank.rankings.length).toBe(3)
       expect(r).toBeDefined()
       expect(r.participation).toBe(1)
       expect(r.goalAverage).toBe(0)
@@ -81,12 +104,12 @@ describe('Torunament use case', () => {
       done()
     })
 
-    it('Register old player', async (done) => {      
+    it('Register old player', async (done) => {
       await useCase.exec('1', RankingType.SEN)
-      
-      const r = rank.rankings.find(x => x.id === '1')      
-      
-      expect(rank.rankings.length).toBe(2)      
+
+      const r = rank.rankings.find(x => x.id === '1')
+
+      expect(rank.rankings.length).toBe(3)
       expect(r).toBeDefined()
       expect(r.participation).toBe(2)
       expect(r.goalAverage).toBe(10)
@@ -95,7 +118,7 @@ describe('Torunament use case', () => {
       done()
     })
 
-    it('Registing player call provider', async (done)=>{
+    it('Registing player call provider', async (done) => {
       const spyFind = jest.spyOn(rank, 'findRanking')
       const spyUpdateRank = jest.spyOn(rank, 'update')
       const spyUpdatePlayer = jest.spyOn(player, 'update')
@@ -105,6 +128,49 @@ describe('Torunament use case', () => {
       expect(spyFind).toHaveBeenCalled()
       expect(spyUpdateRank).toHaveBeenCalled()
       expect(spyUpdatePlayer).toHaveBeenCalled()
+
+      done()
+    })
+  })
+
+  describe('Update score', () => {
+    const rank = new mockRanginkProvider()
+    const team = new mockTeamProvider()
+
+    const useCase = new UpdateScore(rank, team)
+
+    it('Team 1 win', async (done) => {            
+      await useCase.exec(new Match({
+        teamOne: new Team({ id: '1', score: 13, players: [new Player({ id: '1' })] }),
+        teamTwo: new Team({ id: '2', score: 1, players: [new Player({ id: '3' })] }),
+      }), RankingType.SEN)
+
+      expect(team.teams.find(x => x.id === '1').score).toBe(13)
+      expect(team.teams.find(x => x.id === '2').score).toBe(1)
+      
+      expect((await rank.findRanking('1',RankingType.SEN)).point).toBe(13)
+      expect((await rank.findRanking('1',RankingType.SEN)).goalAverage).toBe(22)
+
+      expect((await rank.findRanking('3',RankingType.SEN)).point).toBe(11)
+      expect((await rank.findRanking('3',RankingType.SEN)).goalAverage).toBe(-2)
+
+      done()
+    })
+
+    it('Team 2 win', async (done) => {            
+      await useCase.exec(new Match({
+        teamOne: new Team({ id: '1', score: 1, players: [new Player({ id: '1' })] }),
+        teamTwo: new Team({ id: '2', score: 13, players: [new Player({ id: '3' })] }),
+      }), RankingType.SEN)
+
+      expect(team.teams.find(x => x.id === '1').score).toBe(1)
+      expect(team.teams.find(x => x.id === '2').score).toBe(13)
+      
+      expect((await rank.findRanking('1',RankingType.SEN)).point).toBe(14)
+      expect((await rank.findRanking('1',RankingType.SEN)).goalAverage).toBe(10)
+
+      expect((await rank.findRanking('3',RankingType.SEN)).point).toBe(14)
+      expect((await rank.findRanking('3',RankingType.SEN)).goalAverage).toBe(10)
 
       done()
     })
