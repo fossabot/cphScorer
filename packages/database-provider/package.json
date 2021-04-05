@@ -1,0 +1,25 @@
+{
+  "name": "@cph-scorer/database-provider",
+  "version": "1.0.0-alpha.0",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "author": "corentin-verquin",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "format": "ts-standard --report stylish --fix src",
+    "compile": "tsc -b --verbose",
+    "pre-commit": "yarn format"
+  },
+  "devDependencies": {
+    "ts-standard": "^10.0.0",
+    "typescript": "^4.1.5"
+  },
+  "dependencies": {
+    "@cph-scorer/core": "^1.0.0-alpha.0",
+    "@cph-scorer/model": "^1.0.0-alpha.0",
+    "class-transformer": "^0.4.0",
+    "pg": "^8.5.1",
+    "typeorm": "^0.2.32"
+  }
+}
