@@ -28,7 +28,7 @@ export class RankingEntity {
   @JoinTable()
   public players: PlayerEntity[]
 
-  public toPRanking (): Ranking {
+  public toRanking (): Ranking {
     return plainToClass(Ranking, this)
   }
 
