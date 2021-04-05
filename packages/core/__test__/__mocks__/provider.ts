@@ -81,6 +81,8 @@ class mockRanginkProvider implements RankingProvider {
       this.rankings[res] = { ...this.rankings[res], ...ranking }
     }
   }
+
+  getRanking(type: RankingType): Promise<RankingType> { return null }
 }
 
 class mockRoundProvider implements RoundProvider {

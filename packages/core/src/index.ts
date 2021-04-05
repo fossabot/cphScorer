@@ -13,6 +13,7 @@ export * from './use-cases/tournament/registerPlayer'
 export * from './use-cases/tournament/generateRound'
 export * from './use-cases/tournament/getRound'
 export * from './use-cases/tournament/updateScore'
+export * from './use-cases/tournament/getRanking'
 
 export * from './errors/PlayerUnknow'
 export * from './errors/MaxCallError'

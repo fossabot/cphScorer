@@ -1,4 +1,4 @@
-import { RegisterPlayer, PlayerUnknowException, TeamProvider, UpdateScore, GenerateRound, MaxCallError, GetRound } from "../../src"
+import { RegisterPlayer, PlayerUnknowException, TeamProvider, UpdateScore, GenerateRound, MaxCallError, GetRound, GetRanking } from "../../src"
 import { Match, Team, RankingType, Player } from "@cph-scorer/model"
 
 import { mockPlayerProvider, mockTeamProvider, mockRanginkProvider, mockRoundProvider, mockMatchProvider } from '../__mocks__/provider'
@@ -155,5 +155,17 @@ describe('Torunament use case', () => {
 
       done()
     })
+  })
+
+  it('Get ranking', async (done)=>{
+    const rank = new mockRanginkProvider()
+
+    const spy = jest.spyOn(rank, 'getRanking')
+
+    await new GetRanking(rank).exec(RankingType.SEN)
+
+    expect(spy).toHaveBeenCalled()
+    
+    done()
   })
 })
