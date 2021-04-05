@@ -57,3 +57,5 @@ jspm_packages/
 # End of https://www.toptal.com/developers/gitignore/api/node,yarn,vscode
 
 lib/
+jest_html_reporters.html
+coverage/

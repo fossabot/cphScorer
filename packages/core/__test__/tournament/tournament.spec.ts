@@ -1,82 +1,7 @@
-import { PlayerProvider, RankingProvider, RegisterPlayer, PlayerUnknowException, TeamProvider, UpdateScore } from "../../src"
-import { Ranking, Team, RankingType, Player } from "../../../model/src"
-import { Match } from "@cph-scorer/model"
+import { RegisterPlayer, PlayerUnknowException, TeamProvider, UpdateScore, GenerateRound, MaxCallError, GetRound } from "../../src"
+import { Match, Team, RankingType, Player } from "@cph-scorer/model"
 
-class mockPlayerProvider implements PlayerProvider {
-  private players = [
-    new Player({ id: '0', register: false }),
-    new Player({ id: '1', register: false })
-  ]
-
-  list(): Promise<Player[]> { return null }
-  add(player: Partial<Player>): Promise<Player> { return null }
-  listRegister(): Promise<Player[]> { return null }
-
-  async update(id: string, player: Partial<Player>): Promise<Player> {
-    const res = this.players[
-      this.players.findIndex(x => x.id === id)
-    ] ?? null
-
-    return res === null ? res : { ...res, ...player } as Player
-  }
-
-}
-
-class mockTeamProvider implements TeamProvider {
-  public teams = [
-    new Team({ id: '1', score: 0, players: [new Player({ id: '1' })] }),
-    new Team({ id: '2', score: 0, players: [new Player({ id: '3' })] }),
-  ]
-
-  insert: (player: Player[]) => Promise<Team>
-  async update(id: string, score: number): Promise<Team> {    
-    const t = this.teams.find(t => t.id === id)
-    t.score = score
-    return t
-  }
-
-}
-
-class mockRanginkProvider implements RankingProvider {
-  public rankings = [
-    new Ranking({
-      id: '1',
-      players: [new Player({ id: '1' })],
-      point: 10,
-      goalAverage: 10,
-      participation: 1
-    }),
-    new Ranking({
-      id: '3',
-      players: [new Player({ id: '3' })],
-      point: 10,
-      goalAverage: 10,
-      participation: 1
-    })
-  ]
-
-  async findRanking(id: string, type: RankingType): Promise<Ranking> {
-    const res = this.rankings.find(
-      x => x.players?.filter(p => p.id === id).length !== 0
-    ) || null
-
-    return res
-  }
-
-  async update(id: string, ranking: Partial<Ranking>): Promise<void> {
-    const res = this.rankings.findIndex(
-      x => x.players.filter(p => p.id === id).length !== 0
-    )
-    if (res === -1) this.rankings.push(new Ranking({
-      id: '2',
-      ...ranking,
-      players: []
-    }))
-    else {
-      this.rankings[res] = { ...this.rankings[res], ...ranking }
-    }
-  }
-}
+import { mockPlayerProvider, mockTeamProvider, mockRanginkProvider, mockRoundProvider, mockMatchProvider } from '../__mocks__/provider'
 
 describe('Torunament use case', () => {
 
@@ -133,13 +58,69 @@ describe('Torunament use case', () => {
     })
   })
 
+  describe('generate round', () => {
+    const player = new mockPlayerProvider()
+    const team = new mockTeamProvider()
+    const round = new mockRoundProvider()
+    const match = new mockMatchProvider()
+
+    beforeEach(() => {
+      player.players = [
+        new Player({ id: '0', register: true }),
+        new Player({ id: '1', register: true }),
+        new Player({ id: '3', register: true }),
+        new Player({ id: '5', register: true })
+      ]
+      team.teams = []
+      match.match = []
+      round.round = []
+    })
+
+    const useCase = new GenerateRound(player, round, team, match)
+
+    it('Imposible generation', () => {
+      return useCase.exec(4).catch(e => expect(e).toBeInstanceOf(MaxCallError))
+    })
+
+    it('Correct generation team size 2', async (done) => {
+      await useCase.exec(3)
+
+      expect(team.teams.length).toBe(6)
+      expect(match.match.length).toBe(3)
+      expect(round.round.length).toBe(3)
+
+      done()
+    })
+
+    it('Correct generation team size 3', async (done) => {
+      player.players.push(new Player({ id: '6', register: true }))
+      await useCase.exec(1)
+
+      expect(team.teams.length).toBe(2)
+      expect(match.match.length).toBe(1)
+      expect(round.round.length).toBe(1)
+
+      done()
+    })
+
+    it('Get round', async (done)=>{
+      const spy = jest.spyOn(round, 'getRound')
+
+      await new GetRound(round).exec(1)
+
+      expect(spy).toHaveBeenCalled()
+      
+      done()
+    })
+  })
+
   describe('Update score', () => {
     const rank = new mockRanginkProvider()
     const team = new mockTeamProvider()
 
     const useCase = new UpdateScore(rank, team)
 
-    it('Team 1 win', async (done) => {            
+    it('Team 1 win', async (done) => {
       await useCase.exec(new Match({
         teamOne: new Team({ id: '1', score: 13, players: [new Player({ id: '1' })] }),
         teamTwo: new Team({ id: '2', score: 1, players: [new Player({ id: '3' })] }),
@@ -147,17 +128,17 @@ describe('Torunament use case', () => {
 
       expect(team.teams.find(x => x.id === '1').score).toBe(13)
       expect(team.teams.find(x => x.id === '2').score).toBe(1)
-      
-      expect((await rank.findRanking('1',RankingType.SEN)).point).toBe(13)
-      expect((await rank.findRanking('1',RankingType.SEN)).goalAverage).toBe(22)
 
-      expect((await rank.findRanking('3',RankingType.SEN)).point).toBe(11)
-      expect((await rank.findRanking('3',RankingType.SEN)).goalAverage).toBe(-2)
+      expect((await rank.findRanking('1', RankingType.SEN)).point).toBe(13)
+      expect((await rank.findRanking('1', RankingType.SEN)).goalAverage).toBe(22)
+
+      expect((await rank.findRanking('3', RankingType.SEN)).point).toBe(11)
+      expect((await rank.findRanking('3', RankingType.SEN)).goalAverage).toBe(-2)
 
       done()
     })
 
-    it('Team 2 win', async (done) => {            
+    it('Team 2 win', async (done) => {
       await useCase.exec(new Match({
         teamOne: new Team({ id: '1', score: 1, players: [new Player({ id: '1' })] }),
         teamTwo: new Team({ id: '2', score: 13, players: [new Player({ id: '3' })] }),
@@ -165,12 +146,12 @@ describe('Torunament use case', () => {
 
       expect(team.teams.find(x => x.id === '1').score).toBe(1)
       expect(team.teams.find(x => x.id === '2').score).toBe(13)
-      
-      expect((await rank.findRanking('1',RankingType.SEN)).point).toBe(14)
-      expect((await rank.findRanking('1',RankingType.SEN)).goalAverage).toBe(10)
 
-      expect((await rank.findRanking('3',RankingType.SEN)).point).toBe(14)
-      expect((await rank.findRanking('3',RankingType.SEN)).goalAverage).toBe(10)
+      expect((await rank.findRanking('1', RankingType.SEN)).point).toBe(14)
+      expect((await rank.findRanking('1', RankingType.SEN)).goalAverage).toBe(10)
+
+      expect((await rank.findRanking('3', RankingType.SEN)).point).toBe(14)
+      expect((await rank.findRanking('3', RankingType.SEN)).goalAverage).toBe(10)
 
       done()
     })

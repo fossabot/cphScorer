@@ -8,5 +8,16 @@ export default {
   transform: {
     '^.+\\.ts$': 'babel-jest'
   },
-  clearMocks: true
+  clearMocks: true,
+  reporters: [
+    "default",
+    "jest-html-reporters",
+  ],
+  collectCoverage: true,
+  collectCoverageFrom: [
+    "src/**/*.ts",
+    "!src/providers/**",
+    "!src/index.ts",
+  ],
+  coverageReporters: ['text-summary','text', 'html']
 }

@@ -8,9 +8,7 @@ jobs:
     
     steps:
       - name: Checkout 🛎
-        uses: actions/checkout@main
-        with:
-          fetch-depth: 2          
+        uses: actions/checkout@main    
 
       - name: Setup node env 🏗
         uses: actions/setup-node@v2.1.4
@@ -28,8 +26,11 @@ jobs:
       - name: Install dependencies 👨🏻‍💻
         run: yarn run bootstrap || npx lerna bootstrap
 
+      - name: Run compile 🏗
+        run: npx --no-install lerna run compile
+
       - name: Run linter 👀
-        run: ./tools/script-runner.js format HEAD        
+        run: npx --no-install lerna run format
 
       - name: Run tests 🧪
-        run: ./tools/script-runner.js test HEAD
+        run: npx --no-install lerna run test

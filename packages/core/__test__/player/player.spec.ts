@@ -1,16 +1,12 @@
-import { PlayerProvider, ListPlayer, ListRegisterPlayer, AddPlayer, UpdatePlayer } from '../../src'
+import { ListPlayer, ListRegisterPlayer, AddPlayer, UpdatePlayer } from '../../src'
+import { mockPlayerProvider } from '../__mocks__/provider'
 
-const mockProvider: PlayerProvider = {
-  list: jest.fn(),
-  add: jest.fn(),
-  listRegister: jest.fn(),
-  update: jest.fn()
-}
+const provider = new mockPlayerProvider()
 
 describe('Player use case', () => {
   it('List player', async (done) => {
-    const useCase = new ListPlayer(mockProvider)
-    const spy = jest.spyOn(mockProvider, 'list')
+    const useCase = new ListPlayer(provider)
+    const spy = jest.spyOn(provider, 'list')
 
     await useCase.execute()
 
@@ -21,8 +17,8 @@ describe('Player use case', () => {
   })
 
   it('List register player', async (done) => {
-    const useCase = new ListRegisterPlayer(mockProvider)
-    const spy = jest.spyOn(mockProvider, 'listRegister')
+    const useCase = new ListRegisterPlayer(provider)
+    const spy = jest.spyOn(provider, 'listRegister')
 
     await useCase.execute()
 
@@ -33,8 +29,8 @@ describe('Player use case', () => {
   })
 
   it('Add player', async (done) => {
-    const useCase = new AddPlayer(mockProvider)
-    const spy = jest.spyOn(mockProvider, 'add')
+    const useCase = new AddPlayer(provider)
+    const spy = jest.spyOn(provider, 'add')
 
     await useCase.execute({})
 
@@ -45,8 +41,8 @@ describe('Player use case', () => {
   })
 
   it('Update player', async (done) => {
-    const useCase = new UpdatePlayer(mockProvider)
-    const spy = jest.spyOn(mockProvider, 'update')
+    const useCase = new UpdatePlayer(provider)
+    const spy = jest.spyOn(provider, 'update')
 
     await useCase.execute('', {})
 

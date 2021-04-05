@@ -9,7 +9,7 @@
   "scripts": {
     "format": "ts-standard --report stylish --fix src",
     "compile": "tsc -b --verbose",
-    "pre-commit": "npx --no-install lint-staged"
+    "pre-commit": "yarn format"
   },
   "devDependencies": {
     "ts-standard": "^10.0.0",
