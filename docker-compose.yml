@@ -1,0 +1,29 @@
+version: "3.3"
+
+services:
+  postgres:
+    user: ${CURRENT_UID}:${CURRENT_GID}
+    build: 
+      context: .
+      dockerfile: dev.dockerfile 
+      args:
+        UNAME: ${CURRENT_NAME}
+        UID: ${CURRENT_UID}
+        GID: ${CURRENT_GID}
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: psql
+      POSTGRES_PASSWORD: psql
+      POSTGRES_DB: psql
+    volumes:
+      - $PWD/data/psql:/var/lib/postgresql/data
+    networks:
+      dbnet:
+        ipv4_address: 192.168.5.5
+
+networks:
+  dbnet:
+    ipam:
+      config:
+        - subnet: 192.168.5.0/24

@@ -4,7 +4,7 @@ import { plainToClass } from 'class-transformer'
 import { Match } from '@cph-scorer/model'
 import { Entity, PrimaryGeneratedColumn, OneToOne, ManyToOne, JoinColumn } from 'typeorm'
 
-@Entity()
+@Entity({ name: 'match' })
 export class MatchEntity {
   @PrimaryGeneratedColumn('rowid')
   public id: string

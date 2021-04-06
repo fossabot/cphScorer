@@ -1,6 +1,6 @@
 import { RankingProvider } from '@cph-scorer/core'
 import { Repository } from 'typeorm'
-import { RankingEntity } from '../entiy/ranking'
+import { RankingEntity } from '../entity/ranking'
 import { RankingType, Ranking } from '@cph-scorer/model'
 
 export class RankingDao implements RankingProvider {

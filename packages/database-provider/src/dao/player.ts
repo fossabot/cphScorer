@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm'
-import { PlayerEntity } from '../entiy/player'
+import { PlayerEntity } from '../entity/player'
 import { PlayerProvider } from '@cph-scorer/core'
 import { Player } from '@cph-scorer/model'
 

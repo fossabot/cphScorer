@@ -3,9 +3,9 @@ import { plainToClass } from 'class-transformer'
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm'
 import { PlayerEntity } from './player'
 
-@Entity()
+@Entity({ name: 'ranking' })
 export class RankingEntity {
-  @PrimaryGeneratedColumn('rowid')
+  @PrimaryGeneratedColumn('uuid')
   public id: string
 
   @Column({ type: 'int', default: 1 })

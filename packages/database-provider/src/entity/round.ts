@@ -1,8 +1,9 @@
 import { plainToClass } from 'class-transformer'
 import { Round } from '@cph-scorer/model'
-import { PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
+import { PrimaryGeneratedColumn, Column, OneToMany, Entity } from 'typeorm'
 import { MatchEntity } from './match'
 
+@Entity({ name: 'round' })
 export class RoundEntity {
   @PrimaryGeneratedColumn('uuid')
   public id: string

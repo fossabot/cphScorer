@@ -3,7 +3,7 @@ import { Team } from '@cph-scorer/model'
 import { plainToClass } from 'class-transformer'
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm'
 
-@Entity()
+@Entity({ name: 'team' })
 export class TeamEntity {
   @PrimaryGeneratedColumn('uuid')
   public id: string

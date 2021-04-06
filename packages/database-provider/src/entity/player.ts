@@ -2,7 +2,7 @@ import { Player } from '@cph-scorer/model'
 import { plainToClass } from 'class-transformer'
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
 
-@Entity()
+@Entity({ name: 'player' })
 export class PlayerEntity {
   @PrimaryGeneratedColumn('uuid')
   public id: string

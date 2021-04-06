@@ -59,3 +59,4 @@ jspm_packages/
 lib/
 jest_html_reporters.html
 coverage/
+data/
