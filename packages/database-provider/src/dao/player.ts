@@ -35,7 +35,7 @@ export class PlayerDao implements PlayerProvider {
     const p = await this.playerRepository
       .findOne({ select: ['firstName', 'lastName', 'register', 'id'], where: { id } })
 
-    if (p === null) return null as any
+    if (p === null || p === undefined) return null as any
 
     return (await this.playerRepository
       .save(Object.assign(p, player)))

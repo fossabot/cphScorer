@@ -7,8 +7,11 @@ export class RankingDao implements RankingProvider {
   constructor (private readonly rankingRepository: Repository<RankingEntity>) { }
 
   public async findRanking (id: string, type: RankingType): Promise<Ranking> {
-    return (await this.rankingRepository
-      .findOneOrFail({ select: ['participation', 'point', 'goalAverage'], where: { type, id } }))
+    return (await this.rankingRepository.createQueryBuilder('ranking')
+      .leftJoinAndSelect('ranking.players', 'players')
+      .select(['ranking.id', 'ranking.participation', 'ranking.point', 'ranking.goalAverage', 'ranking.type', 'players.id'])
+      .where('ranking.type = :type AND players.id = :id', { type, id })
+      .getOneOrFail())
       .toRanking()
   }
 
@@ -19,14 +22,16 @@ export class RankingDao implements RankingProvider {
   }
 
   public async getRanking (type: RankingType): Promise<Ranking[]> {
-    const res = (await this.rankingRepository
-      .find({
-        relations: ['players'],
-        where: { type },
-        order: { point: 'DESC', goalAverage: 'DESC', participation: 'ASC' }
-      }))
+    return (await this.rankingRepository.createQueryBuilder('ranking')
+      .leftJoinAndSelect('ranking.players', 'players')
+      .select(['ranking.participation', 'ranking.point', 'ranking.goalAverage', 'players.firstName', 'players.lastName'])
+      .where('ranking.type = :type', { type })
+      .orderBy({
+        'ranking.point': 'DESC',
+        'ranking.goalAverage': 'DESC',
+        'ranking.participation': 'ASC'
+      })
+      .getMany())
       .map(x => x.toRanking())
-
-    return res
   }
 }

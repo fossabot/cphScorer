@@ -9,8 +9,8 @@
   "scripts": {
     "format": "ts-standard --report stylish --fix src",
     "compile": "tsc -b --verbose",
-    "test": "jest",
-    "pre-commit": "yarn format"
+    "test": "jest --runInBand",
+    "pre-commit": "yarn format && yarn test"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.13.5",
