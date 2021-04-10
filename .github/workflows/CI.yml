@@ -10,10 +10,13 @@ jobs:
       - name: Checkout 🛎
         uses: actions/checkout@main    
 
-      - name: Setup node env 🏗
+      - name: Setup node env ⚙️
         uses: actions/setup-node@v2.1.4
         with:
           node-version: 14
+
+      - name: Install lerna ⬇️
+        run: npm install --global lerna
 
       - name: Cache node_modules 📦
         uses: actions/cache@v2
@@ -21,16 +24,24 @@ jobs:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}    
           restore-keys: |
-            ${{ runner.os }}-modules-      
+            ${{ runner.os }}-modules-   
+
+      - name: Setup database 🗄️
+        uses: harmon758/postgresql-action@v1
+        with:
+          postgresql version: '13.0-alpine'
+          postgresql db: 'psql'
+          postgresql user: 'psql'
+          postgresql password: 'psql'
 
       - name: Install dependencies 👨🏻‍💻
-        run: yarn run bootstrap || npx lerna bootstrap
+        run:  lerna bootstrap
 
       - name: Run compile 🏗
-        run: npx --no-install lerna run compile
+        run: lerna run compile
 
       - name: Run linter 👀
-        run: npx --no-install lerna run format
+        run: lerna run format
 
       - name: Run tests 🧪
-        run: npx --no-install lerna run test
+        run: lerna run test

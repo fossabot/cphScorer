@@ -4,7 +4,7 @@ import { RankingType, Ranking } from '@cph-scorer/model'
 export class GetRanking {
   constructor (private readonly rankingProvider: RankingProvider) { }
 
-  public async exec (type: RankingType): Promise<Ranking> {
+  public async exec (type: RankingType): Promise<Ranking[]> {
     return await this.rankingProvider.getRanking(type)
   }
 }
