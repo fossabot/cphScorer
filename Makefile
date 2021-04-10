@@ -1,6 +1,6 @@
 .DEFAULT_GOAL:up-dev-env
 
-.PHONY: up-dev-env down-dev-env connect-db
+.PHONY: up-dev-env down-dev-env connect-db compile format test
 
 CURRENT_GID := $(shell id -u)
 CURRENT_UID := $(shell id -g)
@@ -19,3 +19,12 @@ down-dev-env:
 
 connect-db:
 	docker run -e PGPASSWORD='psql' --net 'cphscorer_dbnet' -it --rm  postgres:13.0-alpine psql -h 192.168.5.5 -d psql -U psql
+
+compile:
+	lerna run compile
+
+format:
+	lerna run format
+
+test:
+	lerna run test
