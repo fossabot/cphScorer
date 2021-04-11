@@ -9,6 +9,9 @@
     },
     {
       "path": "database-provider"
+    },
+    {
+      "path": "api"
     }
   ]
 }
