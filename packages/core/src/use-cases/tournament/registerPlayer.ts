@@ -13,6 +13,10 @@ export class RegisterPlayer {
 
     const lastRanking = await this.rankingProvider.findRanking(id, type)
 
+    if (lastRanking === null || lastRanking === undefined) {
+      await this.rankingProvider.createRanking(player, type)
+    }
+
     const ranking: Partial<Ranking> = {
       type,
       participation: (lastRanking?.participation ?? 0) + 1, // eslint-disable-line

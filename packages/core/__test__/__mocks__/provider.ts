@@ -82,7 +82,8 @@ class mockRanginkProvider implements RankingProvider {
     }
   }
 
-  getRanking(type: RankingType): Promise<RankingType> { return null }
+  getRanking(type: RankingType): Promise<Ranking[]> { return null }
+  createRanking(player: Player, type: RankingType) { return null }
 }
 
 class mockRoundProvider implements RoundProvider {

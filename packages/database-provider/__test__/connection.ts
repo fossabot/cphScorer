@@ -13,7 +13,7 @@ const connection = {
       url: 'postgres://psql:psql@127.0.0.1:5432/psql',
       synchronize: true,
       dropSchema: true,
-      entities: [PlayerEntity, RankingEntity, TeamEntity, RoundEntity, MatchEntity],
+      entities: [PlayerEntity, RankingEntity, TeamEntity, RoundEntity, MatchEntity, RoundEntity],
       migrations: [Seed1617737108784]
     })
     await con.runMigrations()

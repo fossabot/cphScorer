@@ -1,7 +1,8 @@
 import { RankingProvider } from '@cph-scorer/core'
 import { Repository } from 'typeorm'
 import { RankingEntity } from '../entity/ranking'
-import { RankingType, Ranking } from '@cph-scorer/model'
+import { RankingType, Ranking, Player } from '@cph-scorer/model'
+import { PlayerEntity } from '../entity/player'
 
 export class RankingDao implements RankingProvider {
   constructor (private readonly rankingRepository: Repository<RankingEntity>) { }
@@ -33,5 +34,15 @@ export class RankingDao implements RankingProvider {
       })
       .getMany())
       .map(x => x.toRanking())
+  }
+
+  public async createRanking (player: Partial<Player>, type: RankingType): Promise<void> {
+    const ranking = new RankingEntity()
+    const playerEntity = new PlayerEntity()
+    playerEntity.fromPlayer(player)
+
+    ranking.type = type
+    ranking.players = [playerEntity]
+    await this.rankingRepository.save(ranking)
   }
 }

@@ -8,3 +8,6 @@ export * from './entity/round'
 
 export * from './dao/ranking'
 export * from './dao/player'
+export * from './dao/round'
+export * from './dao/match'
+export * from './dao/team'

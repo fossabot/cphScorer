@@ -19,11 +19,11 @@ export class TeamEntity {
   @JoinTable()
   public players: PlayerEntity[]
 
-  public toPlayer (): Team {
+  public toTeam (): Team {
     return plainToClass(Team, this)
   }
 
-  public fromPlayer (plain: Partial<Team>): void {
+  public fromTeam (plain: Partial<Team>): void {
     Object.assign(this, plainToClass(TeamEntity, plain))
   }
 }
