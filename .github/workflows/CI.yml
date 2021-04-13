@@ -45,3 +45,13 @@ jobs:
 
       - name: Run tests 🧪
         run: lerna run test
+
+      - name: Create code coverage archive 🗜️
+        run: find . -type d \( -name node_modules \) -prune -false -o -name coverage -o -type f -name jest_html_reporters.html | xargs tar cvzf code_coverage.tar.gz
+
+      - name: Archive code coverage results ⬆️
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-report
+          path: code_coverage.tar.gz
+          retention-days: 1
