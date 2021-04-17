@@ -40,6 +40,11 @@ make compile
 ```bash
 make test
 ```
+
+## Graph dependencies
+![](https://raw.githubusercontent.com/corentin-verquin/cphScorer/ghpage/graph-dependencies.png)
+
+
 ## Author
 **Corentin Verquin**
 - Github [@corentin-verquin](https://github.com/corentin-verquin)
