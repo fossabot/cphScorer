@@ -6,5 +6,5 @@ async function bootstrap (): Promise<void> {
   await app.listen(3000)
 }
 bootstrap()
-  .then(() => console.log('app started'))
+  .then(() => { })
   .catch(e => console.error(e))
