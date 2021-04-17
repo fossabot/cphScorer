@@ -4,7 +4,7 @@ import { getConnection } from 'typeorm'
 import { PlayerEntity } from '../../src/entity/player'
 
 describe('Player dao', () => {
-  let dao: PlayerDao = null
+  let dao: PlayerDao
 
   beforeAll(async (done) => {
     await connection.create()

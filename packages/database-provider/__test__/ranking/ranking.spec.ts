@@ -8,11 +8,11 @@ import { RankingType } from "@cph-scorer/model"
 
 
 describe('Ranking dao', () => {
-  let dao: RankingDao = null
-  let idSen = null
-  let idVet = null
-  let toCreate = null
-  const toRanking = []
+  let dao: RankingDao
+  let idSen: any
+  let idVet: any
+  let toCreate: any
+  const toRanking: any[]= []
 
   beforeAll(async (done) => {
     await connection.create()

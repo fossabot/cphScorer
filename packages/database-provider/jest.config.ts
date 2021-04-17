@@ -6,7 +6,7 @@
 export default {
   testEnvironment: 'node',
   transform: {
-    '^.+\\.ts$': 'babel-jest'
+    '^.+\\.ts$': 'ts-jest'
   },
   clearMocks: true,
   reporters: [

@@ -4,7 +4,7 @@ import connection from '../connection'
 import {RoundDao} from '../../src/dao/round'
 
 describe('Round dao', () => {
-  let dao: RoundDao = null
+  let dao: RoundDao
 
   beforeAll(async (done) => {
     await connection.create()

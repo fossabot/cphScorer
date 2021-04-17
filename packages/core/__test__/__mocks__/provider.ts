@@ -7,8 +7,8 @@ class mockPlayerProvider implements PlayerProvider {
     new Player({ id: '1', register: false })
   ]
 
-  list(): Promise<Player[]> { return null }
-  add(player: Partial<Player>): Promise<Player> { return null }
+  async list(): Promise<Player[]> { return [] }
+  async add(player: Partial<Player>): Promise<Player> { return { id: '', firstName: '', lastName: '', register: false } }
 
   async listRegister(): Promise<Player[]> {
     return this.players
@@ -36,7 +36,7 @@ class mockTeamProvider implements TeamProvider {
   }
 
   async update(id: string, score: number): Promise<Team> {
-    const t = this.teams.find(t => t.id === id)
+    const t = this.teams.find(t => t.id === id) as Team
     t.score = score
     return t
   }
@@ -65,7 +65,7 @@ class mockRanginkProvider implements RankingProvider {
       x => x.players?.filter(p => p.id === id).length !== 0
     ) || null
 
-    return res
+    return res as Ranking
   }
 
   async update(id: string, ranking: Partial<Ranking>): Promise<void> {
@@ -82,28 +82,28 @@ class mockRanginkProvider implements RankingProvider {
     }
   }
 
-  getRanking(type: RankingType): Promise<Ranking[]> { return null }
-  createRanking(player: Player, type: RankingType) { return null }
+  async getRanking(type: RankingType): Promise<Ranking[]> { return [] }
+  async createRanking(player: Partial<Player>, type: RankingType) { }
 }
 
 class mockRoundProvider implements RoundProvider {
   public round = []
 
   async insert(roundNumber: number): Promise<Round> {
-    const round = new Round({ roundNumber, id: '' + roundNumber })
-    this.round.push(round)
+    const round = new Round({ roundNumber, id: '' + roundNumber }) as Round
+    this.round.push(round as never)
     return round
   }
 
-  async getRound(roundNumber: number): Promise<Round> { return null }
+  async getRound(roundNumber: number): Promise<Round> { return new Round() }
 }
 
 class mockMatchProvider implements MatchProvider {
   public match = []
 
   async insert(teams: Team[], round: Round): Promise<Match> {
-    const match = new Match({ teamOne: teams[0], teamTwo: teams[1], round })
-    this.match.push(match)
+    const match = new Match({ teamOne: teams[0], teamTwo: teams[1], round }) as Match
+    this.match.push(match as never)
     return match
   }
 }

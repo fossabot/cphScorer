@@ -6,7 +6,7 @@
 export default {
   testEnvironment: 'node',
   transform: {
-    '^.+\\.ts$': 'babel-jest'
+    '^.+\\.ts$': 'ts-jest'
   },
   clearMocks: true,
   reporters: [
@@ -19,5 +19,5 @@ export default {
     "!src/providers/**",
     "!src/index.ts",
   ],
-  coverageReporters: ['text-summary','text', 'html']
+  coverageReporters: ['text-summary', 'text', 'html']  
 }

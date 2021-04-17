@@ -6,7 +6,7 @@ import { TeamEntity } from '../../src/entity/team'
 import connection from '../connection'
 
 describe('Match dao', () => {
-  let dao: MatchDao = null
+  let dao: MatchDao
 
   beforeAll(async (done) => {
     await connection.create()

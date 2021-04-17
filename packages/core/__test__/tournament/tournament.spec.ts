@@ -22,9 +22,9 @@ describe('Torunament use case', () => {
 
       expect(rank.rankings.length).toBe(3)
       expect(r).toBeDefined()
-      expect(r.participation).toBe(1)
-      expect(r.goalAverage).toBe(0)
-      expect(r.point).toBe(0)
+      expect(r?.participation).toBe(1)
+      expect(r?.goalAverage).toBe(0)
+      expect(r?.point).toBe(0)
 
       done()
     })
@@ -36,9 +36,9 @@ describe('Torunament use case', () => {
 
       expect(rank.rankings.length).toBe(3)
       expect(r).toBeDefined()
-      expect(r.participation).toBe(2)
-      expect(r.goalAverage).toBe(10)
-      expect(r.point).toBe(10)
+      expect(r?.participation).toBe(2)
+      expect(r?.goalAverage).toBe(10)
+      expect(r?.point).toBe(10)
 
       done()
     })
@@ -126,8 +126,8 @@ describe('Torunament use case', () => {
         teamTwo: new Team({ id: '2', score: 1, players: [new Player({ id: '3' })] }),
       }), RankingType.SEN)
 
-      expect(team.teams.find(x => x.id === '1').score).toBe(13)
-      expect(team.teams.find(x => x.id === '2').score).toBe(1)
+      expect(team.teams.find(x => x.id === '1')?.score).toBe(13)
+      expect(team.teams.find(x => x.id === '2')?.score).toBe(1)
 
       expect((await rank.findRanking('1', RankingType.SEN)).point).toBe(13)
       expect((await rank.findRanking('1', RankingType.SEN)).goalAverage).toBe(22)
@@ -144,8 +144,8 @@ describe('Torunament use case', () => {
         teamTwo: new Team({ id: '2', score: 13, players: [new Player({ id: '3' })] }),
       }), RankingType.SEN)
 
-      expect(team.teams.find(x => x.id === '1').score).toBe(1)
-      expect(team.teams.find(x => x.id === '2').score).toBe(13)
+      expect(team.teams.find(x => x.id === '1')?.score).toBe(1)
+      expect(team.teams.find(x => x.id === '2')?.score).toBe(13)
 
       expect((await rank.findRanking('1', RankingType.SEN)).point).toBe(14)
       expect((await rank.findRanking('1', RankingType.SEN)).goalAverage).toBe(10)
