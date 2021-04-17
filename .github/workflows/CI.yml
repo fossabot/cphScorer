@@ -47,9 +47,11 @@ jobs:
         run: lerna run test
 
       - name: Create code coverage archive 🗜️
+        if: ${{ github.ref == 'refs/heads/master' }}
         run: find ./packages -name coverage -o -name jest_html_reporters.html | xargs tar cvzf code_coverage.tar.gz
 
       - name: Archive code coverage results ⬆️
+        if: ${{ github.ref == 'refs/heads/master' }}
         uses: actions/upload-artifact@v2
         with:
           name: code-coverage-report
@@ -57,12 +59,14 @@ jobs:
           retention-days: 1
 
       - name: Create graph dependencies 📈
+        if: ${{ github.ref == 'refs/heads/master' }}
         uses: lerdajs/lerna-graph-action@1.0.0
         with: 
           rootPath: .
           imagePath: graph-dependencies.png
 
       - name: Archive graph dependencies results ⬆️
+        if: ${{ github.ref == 'refs/heads/master' }}
         uses: actions/upload-artifact@v2
         with:
           name: graph-dependencies
@@ -70,6 +74,7 @@ jobs:
           retention-days: 1
 
   Pushing-code-coverage:
+    if: ${{ github.ref == 'refs/heads/master' }}
     runs-on: ubuntu-latest
     needs: test-lint
     steps:
