@@ -23,6 +23,9 @@ make
 # or
 make up-dev-env
 
+# Set up data base with test data
+make import
+
 # Stop postgresql container
 make down-dev-env
 
