@@ -1,0 +1,13 @@
+version: 2
+updates:
+
+- package-ecosystem: npm
+  directory: '/'
+  schedule:
+    interval: weekly
+    time: '00:00'
+    day: 'monday'
+  open-pull-requests-limit: 10
+  ignore:
+    - dependency-name: '@cph*'
+  target-branch:  'develop'
