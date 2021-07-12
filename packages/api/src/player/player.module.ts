@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common'
-import { DataBaseModule } from 'src/config/database.module'
+import { DataBaseModule } from '../config/database.module'
 import { PlayerService } from './player.service'
 
 @Module({

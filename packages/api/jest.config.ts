@@ -15,9 +15,8 @@ export default {
   collectCoverage: true,
   collectCoverageFrom: [
     "src/**/*.ts",
-    "!src/migration/**",
-    "!src/entity/**",
-    "!src/index.ts",
+    "!src/app.module.ts",
+    "!src/main.ts"
   ],
-  coverageReporters: ['text-summary','text', 'html']
+  coverageReporters: ['text-summary', 'text', 'html']  
 }

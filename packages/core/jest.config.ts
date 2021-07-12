@@ -11,7 +11,6 @@ export default {
   clearMocks: true,
   reporters: [
     "default",
-    "jest-html-reporters",
   ],
   collectCoverage: true,
   collectCoverageFrom: [
