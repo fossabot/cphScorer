@@ -1,5 +1,5 @@
 import { chain, chunk, intersection, flatten } from 'lodash'
-import { Observable } from 'rxjs'
+import { Observable, lastValueFrom } from 'rxjs'
 import { retry } from 'rxjs/operators'
 import { Player } from '@cph-scorer/model'
 import { PlayerProvider } from '../../providers/player.provider'
@@ -18,9 +18,10 @@ export class GenerateRound {
 
   public async exec (numberOfRound: number): Promise<void> {
     const register = await this.playerProvider.listRegister()
-    const rounds = await this.generate(numberOfRound, register)
-      .pipe(retry(5))
-      .toPromise()
+    const rounds = await lastValueFrom(
+      this.generate(numberOfRound, register)
+        .pipe(retry(5))
+    )
 
     for (let i = 0; i < rounds.length; i++) {
       const round = await this.roundProvider.insert(i + 1)
