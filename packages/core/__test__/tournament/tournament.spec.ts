@@ -15,7 +15,7 @@ describe('Torunament use case', () => {
       return useCase.exec('00', RankingType.SEN).catch(e => expect(e).toBeInstanceOf(PlayerUnknowException))
     })
 
-    it('Register new player', async (done) => {
+    it('Register new player', async () => {
       await useCase.exec('0', RankingType.SEN)
 
       const r = rank.rankings.find(x => x.id === '2')
@@ -25,11 +25,9 @@ describe('Torunament use case', () => {
       expect(r?.participation).toBe(1)
       expect(r?.goalAverage).toBe(0)
       expect(r?.point).toBe(0)
-
-      done()
     })
 
-    it('Register old player', async (done) => {
+    it('Register old player', async () => {
       await useCase.exec('1', RankingType.SEN)
 
       const r = rank.rankings.find(x => x.id === '1')
@@ -39,11 +37,9 @@ describe('Torunament use case', () => {
       expect(r?.participation).toBe(2)
       expect(r?.goalAverage).toBe(10)
       expect(r?.point).toBe(10)
-
-      done()
     })
 
-    it('Registing player call provider', async (done) => {
+    it('Registing player call provider', async () => {
       const spyFind = jest.spyOn(rank, 'findRanking')
       const spyUpdateRank = jest.spyOn(rank, 'update')
       const spyUpdatePlayer = jest.spyOn(player, 'update')
@@ -53,8 +49,6 @@ describe('Torunament use case', () => {
       expect(spyFind).toHaveBeenCalled()
       expect(spyUpdateRank).toHaveBeenCalled()
       expect(spyUpdatePlayer).toHaveBeenCalled()
-
-      done()
     })
   })
 
@@ -82,35 +76,29 @@ describe('Torunament use case', () => {
       return useCase.exec(4).catch(e => expect(e).toBeInstanceOf(MaxCallError))
     })
 
-    it('Correct generation team size 2', async (done) => {
+    it('Correct generation team size 2', async () => {
       await useCase.exec(3)
 
       expect(team.teams.length).toBe(6)
       expect(match.match.length).toBe(3)
       expect(round.round.length).toBe(3)
-
-      done()
     })
 
-    it('Correct generation team size 3', async (done) => {
+    it('Correct generation team size 3', async () => {
       player.players.push(new Player({ id: '6', register: true }))
       await useCase.exec(1)
 
       expect(team.teams.length).toBe(2)
       expect(match.match.length).toBe(1)
       expect(round.round.length).toBe(1)
-
-      done()
     })
 
-    it('Get round', async (done)=>{
+    it('Get round', async ()=>{
       const spy = jest.spyOn(round, 'getRound')
 
       await new GetRound(round).exec(1)
 
       expect(spy).toHaveBeenCalled()
-      
-      done()
     })
   })
 
@@ -120,7 +108,7 @@ describe('Torunament use case', () => {
 
     const useCase = new UpdateScore(rank, team)
 
-    it('Team 1 win', async (done) => {
+    it('Team 1 win', async () => {
       await useCase.exec(new Match({
         teamOne: new Team({ id: '1', score: 13, players: [new Player({ id: '1' })] }),
         teamTwo: new Team({ id: '2', score: 1, players: [new Player({ id: '3' })] }),
@@ -134,11 +122,9 @@ describe('Torunament use case', () => {
 
       expect((await rank.findRanking('3', RankingType.SEN)).point).toBe(11)
       expect((await rank.findRanking('3', RankingType.SEN)).goalAverage).toBe(-2)
-
-      done()
     })
 
-    it('Team 2 win', async (done) => {
+    it('Team 2 win', async () => {
       await useCase.exec(new Match({
         teamOne: new Team({ id: '1', score: 1, players: [new Player({ id: '1' })] }),
         teamTwo: new Team({ id: '2', score: 13, players: [new Player({ id: '3' })] }),
@@ -152,20 +138,16 @@ describe('Torunament use case', () => {
 
       expect((await rank.findRanking('3', RankingType.SEN)).point).toBe(14)
       expect((await rank.findRanking('3', RankingType.SEN)).goalAverage).toBe(10)
-
-      done()
     })
   })
 
-  it('Get ranking', async (done)=>{
+  it('Get ranking', async ()=>{
     const rank = new mockRanginkProvider()
 
     const spy = jest.spyOn(rank, 'getRanking')
 
     await new GetRanking(rank).exec(RankingType.SEN)
 
-    expect(spy).toHaveBeenCalled()
-    
-    done()
+    expect(spy).toHaveBeenCalled()    
   })
 })

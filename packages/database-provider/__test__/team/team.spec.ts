@@ -8,28 +8,24 @@ describe('Team dao', () => {
   let dao: TeamDao
   let team: any
 
-  beforeAll(async (done) => {
+  beforeAll(async () => {
     await connection.create()
     dao = new TeamDao(getConnection().getRepository(TeamEntity))
-    done()
   })
 
-  afterAll(async (done) => {
+  afterAll(async () => {
     await connection.close()
-    done()
   })
 
-  it('insert team', async (done)=>{
+  it('insert team', async ()=>{
     const player = await getConnection().getRepository(PlayerEntity).find()
     team = await dao.insert(player.slice(0,2))
     expect(team).toBeDefined()
-    done()
   })
 
-  it('update team', async (done)=>{
+  it('update team', async ()=>{
     const updTeam = await dao.update(team.id,13)
     expect(updTeam.id).toBe(team.id)
     expect(updTeam.score).toBe(13)
-    done()
   })
 })
