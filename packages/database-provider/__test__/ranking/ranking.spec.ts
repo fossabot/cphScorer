@@ -14,7 +14,7 @@ describe('Ranking dao', () => {
   let toCreate: any
   const toRanking: any[]= []
 
-  beforeAll(async (done) => {
+  beforeAll(async () => {
     await connection.create()
     const playerDao = new PlayerDao(getConnection().getRepository(PlayerEntity))
 
@@ -27,49 +27,43 @@ describe('Ranking dao', () => {
     })
 
     dao = new RankingDao(getConnection().getRepository(RankingEntity))
-    done()
   })
 
-  afterAll(async (done) => {
+  afterAll(async () => {
     await connection.close()
-    done()
   })
 
-  it('find ranking SEN', async (done) => {
+  it('find ranking SEN', async () => {
     const ranking = await dao.findRanking(idSen, RankingType.SEN)
 
     expect(ranking.type).toBe(RankingType.SEN)
     expect(ranking.players[0].id).toBe(idSen)
-    done()
   })
 
-  it('find ranking VET', async (done) => {
+  it('find ranking VET', async () => {
     const ranking = await dao.findRanking(idVet, RankingType.VET)
 
     expect(ranking.type).toBe(RankingType.VET)
     expect(ranking.players[0].id).toBe(idVet)
-    done()
   })
 
-  it('update ranking SEN', async (done) => {
+  it('update ranking SEN', async () => {
     await dao.update(idSen, { point: 3, goalAverage: 10, type: RankingType.SEN })
     const ranking = await dao.findRanking(idSen, RankingType.SEN)
 
     expect(ranking.point).toBe(3)
     expect(ranking.goalAverage).toBe(10)
-    done()
   })
 
-  it('update ranking VET', async (done) => {
+  it('update ranking VET', async () => {
     await dao.update(idVet, { point: 3, goalAverage: 10, type: RankingType.VET })
     const ranking = await dao.findRanking(idVet, RankingType.VET)
 
     expect(ranking.point).toBe(3)
     expect(ranking.goalAverage).toBe(10)
-    done()
   })
 
-  it('get ranking SEN', async (done) => {
+  it('get ranking SEN', async () => {
     await dao.update(toRanking[0], { point: 2, goalAverage: 10, participation: 2, type: RankingType.SEN })
     await dao.update(toRanking[1], { point: 2, goalAverage: 10, type: RankingType.SEN })
 
@@ -81,19 +75,16 @@ describe('Ranking dao', () => {
     expect(ranking.findIndex(x => x.players[0].firstName === 'player2')).toBe(3)
     expect(ranking.findIndex(x => x.players[0].firstName === 'player3')).toBe(1)
 
-    done()
   })
 
-  it('get ranking VET', async (done) => {
+  it('get ranking VET', async () => {
     const ranking = await dao.getRanking(RankingType.VET)
     expect(ranking.length).toBe(2)
-    done()
   })
 
-  it('create new ranking', async (done) => {
+  it('create new ranking', async () => {
     await dao.createRanking({ id: toCreate }, RankingType.VET)
     const list = await dao.getRanking(RankingType.VET)
     expect(list.length).toBe(3)
-    done()
   })
 })

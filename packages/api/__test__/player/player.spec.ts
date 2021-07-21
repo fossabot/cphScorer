@@ -14,7 +14,7 @@ afterAll(async () => {
 });
 
 describe('Player Controller', () => {
-    it('GET /player', async (done) => {
+    it('GET /player', async () => {
         const { body } = await supertest.agent(app.getHttpServer())
             .get('/player')
             .set('Accept', 'application/json')
@@ -22,6 +22,5 @@ describe('Player Controller', () => {
             .expect(200);
 
         expect(body.length).toBe(16)
-        done()
     })
 })

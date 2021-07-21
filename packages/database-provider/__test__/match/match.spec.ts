@@ -8,18 +8,16 @@ import connection from '../connection'
 describe('Match dao', () => {
   let dao: MatchDao
 
-  beforeAll(async (done) => {
+  beforeAll(async () => {
     await connection.create()
     dao = new MatchDao(getConnection().getRepository(MatchEntity))
-    done()
   })
 
-  afterAll(async (done) => {
+  afterAll(async () => {
     await connection.close()
-    done()
   })
 
-  it('create match', async (done) => {
+  it('create match', async () => {
     const roundEntity = new RoundEntity()
     roundEntity.roundNumber = 2
     const round = await getConnection().getRepository(RoundEntity)
@@ -35,6 +33,5 @@ describe('Match dao', () => {
 
     const match = await dao.insert([team1, team2], round)
     expect(match).toBeDefined()
-    done()
   })
 })

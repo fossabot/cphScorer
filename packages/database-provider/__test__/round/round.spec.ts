@@ -6,28 +6,24 @@ import {RoundDao} from '../../src/dao/round'
 describe('Round dao', () => {
   let dao: RoundDao
 
-  beforeAll(async (done) => {
+  beforeAll(async () => {
     await connection.create()
     dao = new RoundDao(getConnection().getRepository(RoundEntity))
-    done()
   })
 
-  afterAll(async (done) => {
+  afterAll(async () => {
     await connection.close()
-    done()
   })
 
-  it('insert round', async (done)=>{
+  it('insert round', async ()=>{
     const round = await dao.insert(1)
     expect(round).toBeDefined()
     expect(round.roundNumber).toBe(1)   
-    done()
   })
 
-  it('list round', async (done)=>{
+  it('list round', async ()=>{
     const round = await dao.getRound(1)
     expect(round).toBeDefined()
     expect(round.roundNumber).toBe(1)   
-    done()
   })
 })
