@@ -1,9 +1,10 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm'
 import { PlayerEntity, TeamEntity, MatchEntity, RoundEntity, RankingEntity } from '@cph-scorer/database-provider'
+import { Configuration } from './config'
 
 const config: TypeOrmModuleOptions = {
   type: 'postgres',
-  url: process.env.DATABASE_URL ?? 'postgres://psql:psql@127.0.0.1:5432/psql',
+  url: Configuration.instanceOf().database,
   entities: [PlayerEntity, TeamEntity, MatchEntity, RoundEntity, RankingEntity]
 }
 export default config
