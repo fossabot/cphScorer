@@ -4,6 +4,13 @@ import supertest from "supertest";
 import connection from "../connection"
 
 let app: INestApplication;
+let player: any;
+
+const payload = {
+    firstName: "toto",
+    lastName: "tata",
+    register: true
+}
 
 beforeAll(async () => {
     app = await connection(PlayerHttpModule)
@@ -22,5 +29,53 @@ describe('Player Controller', () => {
             .expect(200);
 
         expect(body.length).toBe(16)
+
+        player = body[0]
+    })
+
+    it('PUT /player/:id', async () => {
+        const { body } = await supertest.agent(app.getHttpServer())
+            .put(`/player/${player.id}`)
+            .set('Accept', 'application/json')
+            .send(payload)
+            .expect('Content-Type', /json/)
+            .expect(200);
+
+        expect(body).toStrictEqual({ ...payload, id: player.id })
+    })
+
+    it('PUT /player/:id, try update a fake user', async () => {
+        const { body } = await supertest.agent(app.getHttpServer())
+            .put('/player/ffffffff-ffff-ffff-ffff-ffffffffffff')
+            .set('Accept', 'application/json')
+            .send(payload)
+            .expect('Content-Type', /json/)
+            .expect(404);
+
+        expect(body).toStrictEqual({ statusCode: 404, message: 'Invalid user', error: 'Not Found' })
+    })
+
+    it('GET /player/register', async () => {
+        const { body } = await supertest.agent(app.getHttpServer())
+            .get('/player/register')
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(200);
+
+        expect(body.length).toBe(1)
+        expect(body[0].id).toBe(player.id)
+    })
+
+    it('POST /player', async () => {
+        const { body } = await supertest.agent(app.getHttpServer())
+            .post('/player')
+            .set('Accept', 'application/json')
+            .send(payload)
+            .expect('Content-Type', /json/)
+            .expect(201);
+
+        expect(body.firstName).toBe('toto')
+        expect(body.lastName).toBe('tata')
+        expect(body.register).toBe(true)
     })
 })
