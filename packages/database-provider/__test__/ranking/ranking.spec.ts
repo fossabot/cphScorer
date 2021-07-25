@@ -34,14 +34,14 @@ describe('Ranking dao', () => {
   })
 
   it('find ranking SEN', async () => {
-    const ranking = await dao.findRanking(idSen, RankingType.SEN)
+    const ranking  = (await dao.findRanking(idSen, RankingType.SEN)) as any
 
     expect(ranking.type).toBe(RankingType.SEN)
     expect(ranking.players[0].id).toBe(idSen)
   })
 
   it('find ranking VET', async () => {
-    const ranking = await dao.findRanking(idVet, RankingType.VET)
+    const ranking = (await dao.findRanking(idVet, RankingType.VET)) as any
 
     expect(ranking.type).toBe(RankingType.VET)
     expect(ranking.players[0].id).toBe(idVet)
@@ -49,7 +49,7 @@ describe('Ranking dao', () => {
 
   it('update ranking SEN', async () => {
     await dao.update(idSen, { point: 3, goalAverage: 10, type: RankingType.SEN })
-    const ranking = await dao.findRanking(idSen, RankingType.SEN)
+    const ranking = (await dao.findRanking(idSen, RankingType.SEN)) as any
 
     expect(ranking.point).toBe(3)
     expect(ranking.goalAverage).toBe(10)
@@ -57,7 +57,7 @@ describe('Ranking dao', () => {
 
   it('update ranking VET', async () => {
     await dao.update(idVet, { point: 3, goalAverage: 10, type: RankingType.VET })
-    const ranking = await dao.findRanking(idVet, RankingType.VET)
+    const ranking = (await dao.findRanking(idVet, RankingType.VET)) as any
 
     expect(ranking.point).toBe(3)
     expect(ranking.goalAverage).toBe(10)

@@ -1,11 +1,12 @@
-import { AddPlayer, ListPlayer, ListRegisterPlayer, UpdatePlayer } from '@cph-scorer/core'
-import { Player } from '@cph-scorer/model'
-import { Body, Controller, Get, HttpCode, NotFoundException, Param, Post, Put } from '@nestjs/common'
+import { Body, Controller, Get, HttpCode, InternalServerErrorException, NotFoundException, Param, Post, Put } from '@nestjs/common'
+import { AddPlayer, ListPlayer, ListRegisterPlayer, PlayerUnknowException, RegisterPlayer, UpdatePlayer } from '@cph-scorer/core'
+import { Player, RankingType } from '@cph-scorer/model'
+import { RankingService } from '../ranking/ranking.service'
 import { PlayerService } from './player.service'
 
 @Controller('player')
 export class PlayerController {
-  constructor (private readonly playerService: PlayerService) { }
+  constructor (private readonly playerService: PlayerService, private readonly rankingService: RankingService) { }
 
   @Get('/')
   async list (): Promise<Player[]> {
@@ -38,5 +39,18 @@ export class PlayerController {
       throw new NotFoundException('Invalid user')
     }
     return res
+  }
+
+  @Post('/register')
+  @HttpCode(204)
+  async registerPlayer (@Body() data: { id: string, type: RankingType }): Promise<void> {
+    const useCase = new RegisterPlayer(this.playerService.dao, this.rankingService.dao)
+
+    try {
+      await useCase.exec(data.id, data.type)
+    } catch (e) {
+      if (e instanceof PlayerUnknowException) throw new NotFoundException('Invalid user')
+      throw new InternalServerErrorException(e)
+    }
   }
 }

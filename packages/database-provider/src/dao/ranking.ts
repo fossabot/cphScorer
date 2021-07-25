@@ -7,13 +7,15 @@ import { PlayerEntity } from '../entity/player'
 export class RankingDao implements RankingProvider {
   constructor (private readonly rankingRepository: Repository<RankingEntity>) { }
 
-  public async findRanking (id: string, type: RankingType): Promise<Ranking> {
-    return (await this.rankingRepository.createQueryBuilder('ranking')
+  public async findRanking (id: string, type: RankingType): Promise<Ranking | null> {
+    const res = (await this.rankingRepository.createQueryBuilder('ranking')
       .leftJoinAndSelect('ranking.players', 'players')
       .select(['ranking.id', 'ranking.participation', 'ranking.point', 'ranking.goalAverage', 'ranking.type', 'players.id'])
       .where('ranking.type = :type AND players.id = :id', { type, id })
-      .getOneOrFail())
-      .toRanking()
+      .getOne())
+
+    if (res === undefined) return null
+    return res.toRanking()
   }
 
   public async update (id: string, ranking: Partial<Ranking>): Promise<void> {
