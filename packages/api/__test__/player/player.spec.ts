@@ -76,7 +76,7 @@ describe('Player Controller', () => {
       .expect(204)
   })
 
-  it('PUT /player/register, try register a fake user', async () => {
+  it('POST /player/register, try register a fake user', async () => {
     const { body } = await supertest.agent(app.getHttpServer())
       .post('/player/register')
       .set('Accept', 'application/json')
