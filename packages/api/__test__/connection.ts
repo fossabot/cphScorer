@@ -4,10 +4,10 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Seed1617737108784 } from "@cph-scorer/database-provider";
 
 
-export default async function connect(moduleToLoad: any) {
+export default async function connect(...moduleToLoad: any) {
     const module = await Test.createTestingModule({
         imports: [
-            moduleToLoad,
+            ...moduleToLoad,
             TypeOrmModule.forRoot({
                 ...config,
                 dropSchema: true,

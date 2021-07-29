@@ -27,6 +27,7 @@ function setSwagger (app: INestApplication): void {
     .setTitle('CPH Scorer api')
     .setVersion('1.0')
     .addTag('Player')
+    .addTag('Tournament')
     .build()
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup(Configuration.instanceOf().swaggerPath, app, document)
