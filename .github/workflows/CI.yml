@@ -46,6 +46,9 @@ jobs:
       - name: Run tests 🧪
         run: lerna run test
 
+      - name: Upload coverage ⬆️
+        run: npx codecov --token=${{ secrets.CODECOV_TOKEN }}
+
       - name: Create graph dependencies 📈
         if: ${{ github.ref == 'refs/heads/master' }}
         uses: lerdajs/lerna-graph-action@1.0.0

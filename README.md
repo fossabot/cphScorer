@@ -6,6 +6,8 @@
 ![](https://img.shields.io/badge/TypeScript-4.1.5-blue?logo=typeScript)
 ![](https://img.shields.io/badge/postgreSQL-13.0.0-blue?logo=postgreSQL)
 
+[![codecov](https://codecov.io/gh/corentin-verquin/cphScorer/branch/develop/graph/badge.svg?token=GJAQF8DM3Y)](https://codecov.io/gh/corentin-verquin/cphScorer)
+
 ## Prerequistes
 - node >= 14.15.0
 - yarn >= 1.22.0

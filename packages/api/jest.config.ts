@@ -18,5 +18,5 @@ export default {
     "!src/app.module.ts",
     "!src/main.ts"
   ],
-  coverageReporters: ['text-summary', 'text', 'html']  
+  coverageReporters: ['text-summary', 'lcov']  
 }
