@@ -14,7 +14,7 @@ export class RoundDao implements RoundProvider {
 
   public async getRound (roundNumber: number): Promise<Round> {
     return (await this.roundRepository.findOneOrFail({
-      relations: ['matchs'],
+      relations: ['matchs', 'matchs.teamOne', 'matchs.teamOne.players', 'matchs.teamTwo', 'matchs.teamTwo.players'],
       where: { roundNumber }
     })).toRound()
   }

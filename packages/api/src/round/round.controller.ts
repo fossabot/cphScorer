@@ -1,10 +1,13 @@
-import { ConflictException, Controller, HttpCode, InternalServerErrorException, Param, Post } from '@nestjs/common'
+import { ConflictException, Controller, Get, HttpCode, InternalServerErrorException, Param, Post, NotFoundException } from '@nestjs/common'
 import { PlayerService } from '../player/player.service'
-import { GenerateRound, MaxCallError } from '@cph-scorer/core'
+import { GenerateRound, GetRound, MaxCallError } from '@cph-scorer/core'
 import { RoundService } from './roud.service'
 import { TeamService } from '../team/team.service'
 import { MatchService } from '../match/match.service'
-import { ApiConflictResponse, ApiCreatedResponse, ApiTags } from '@nestjs/swagger'
+import { ApiConflictResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import { EntityNotFoundError } from 'typeorm'
+
+import { RoundDTO } from './DTO/round.dto'
 
 @Controller('round')
 @ApiTags('Tournament')
@@ -22,6 +25,20 @@ export class RoundController {
       await useCase.exec(numberOfRound)
     } catch (e) {
       if (e instanceof MaxCallError) throw new ConflictException(e.message)
+      throw new InternalServerErrorException(e)
+    }
+  }
+
+  @Get('/:round')
+  @ApiOkResponse({ description: 'One round', type: RoundDTO })
+  @ApiNotFoundResponse({ description: 'Round number is invalid' })
+  async list (@Param('round') round: number): Promise<RoundDTO> {
+    const useCase = new GetRound(this.roundService.dao)
+
+    try {
+      return await useCase.exec(round)
+    } catch (e) {
+      if (e instanceof EntityNotFoundError) throw new NotFoundException('Invalid round')
       throw new InternalServerErrorException(e)
     }
   }

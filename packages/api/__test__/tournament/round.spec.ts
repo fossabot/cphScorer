@@ -41,4 +41,24 @@ describe('Round Controller', () => {
       .set('Accept', 'application/json')
       .expect(201)    
   })
+
+  it('GET /:round', async ()=>{
+    const { body } = await supertest.agent(app.getHttpServer())
+      .get('/round/1')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200)
+
+      expect(body).not.toBeNull()
+  })
+
+  it('GET /:round, invalid round number', async ()=>{
+    const { body } = await supertest.agent(app.getHttpServer())
+      .get('/round/4')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(404)
+      
+      expect(body).toStrictEqual({ statusCode: 404, message: 'Invalid round', error: 'Not Found' })
+  })
 })

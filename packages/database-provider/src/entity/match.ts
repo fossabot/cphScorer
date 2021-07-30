@@ -6,7 +6,7 @@ import { Entity, PrimaryGeneratedColumn, OneToOne, ManyToOne, JoinColumn } from 
 
 @Entity({ name: 'match' })
 export class MatchEntity {
-  @PrimaryGeneratedColumn('rowid')
+  @PrimaryGeneratedColumn('uuid')
   public id: string
 
   @OneToOne(() => TeamEntity, { onDelete: 'CASCADE' })

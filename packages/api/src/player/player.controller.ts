@@ -13,7 +13,7 @@ export class PlayerController {
   constructor (private readonly playerService: PlayerService, private readonly rankingService: RankingService) { }
 
   @Get('/')
-  @ApiOkResponse({ description: 'List of all player' })
+  @ApiOkResponse({ description: 'List of all player', type: [PlayerDTO] })
   async list (): Promise<PlayerDTO[]> {
     const useCase = new ListPlayer(this.playerService.dao)
 
@@ -21,7 +21,7 @@ export class PlayerController {
   }
 
   @Get('/register')
-  @ApiOkResponse({ description: 'List of all registered player' })
+  @ApiOkResponse({ description: 'List of all registered player', type: PlayerDTO })
   async listRegister (): Promise<PlayerDTO[]> {
     const useCase = new ListRegisterPlayer(this.playerService.dao)
 
@@ -30,7 +30,7 @@ export class PlayerController {
 
   @Post('/')
   @HttpCode(201)
-  @ApiCreatedResponse({ description: 'Add new player' })
+  @ApiCreatedResponse({ description: 'Add new player', type: PlayerDTO })
   async add (@Body() player: UpdateInsertPlayerDto): Promise<PlayerDTO> {
     const useCase = new AddPlayer(this.playerService.dao)
 
@@ -38,7 +38,7 @@ export class PlayerController {
   }
 
   @Put('/:id')
-  @ApiOkResponse({ description: 'Update one player' })
+  @ApiOkResponse({ description: 'Update one player', type: PlayerDTO })
   @ApiNotFoundResponse({ description: 'Players is unknow' })
   async update (@Param('id') id: string, @Body() player: UpdateInsertPlayerDto): Promise<PlayerDTO> {
     const useCase = new UpdatePlayer(this.playerService.dao)
