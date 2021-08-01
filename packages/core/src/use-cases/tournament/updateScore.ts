@@ -1,7 +1,6 @@
 import { RankingProvider } from '../../providers/ranking.provider'
-import { Match, RankingType, Team } from '@cph-scorer/model'
+import { Match, Player, RankingType, Team } from '@cph-scorer/model'
 import { TeamProvider } from '../../providers/team.provider'
-import { PlayerUnknowException } from '../../errors/PlayerUnknow'
 
 export class UpdateScore {
   constructor (private readonly rankingProvider: RankingProvider, private readonly teamProvider: TeamProvider) { }
@@ -26,15 +25,24 @@ export class UpdateScore {
   }
 
   private async update (team: Team, goalAverage: number, point: number, type: RankingType): Promise<void> {
-    team.players.every(async p => {
-      const rank = await this.rankingProvider.findRanking(p.id, type)
+    const ranks = await Promise.all(
+      team.players.map(async (player: Player) => {
+        return await this.rankingProvider.findRanking(player.id, type)
+      })
+    )
 
-      if (rank === null) throw new PlayerUnknowException(p.id)
-
-      rank.goalAverage += goalAverage
-      rank.point += point
-
-      await this.rankingProvider.update(rank.id, rank)
+    ranks.map(rank => {
+      if (rank !== null) {
+        rank.point += point
+        rank.goalAverage += goalAverage
+      }
+      return rank
     })
+
+    await Promise.all(
+      ranks.map(async rank => {
+        if (rank !== null) { return await this.rankingProvider.update(rank.id, rank) }
+      })
+    )
   }
 }

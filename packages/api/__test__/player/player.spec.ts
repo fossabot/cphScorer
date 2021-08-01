@@ -46,7 +46,7 @@ describe('Player Controller', () => {
 
   it('PUT /player/:id, try update a fake user', async () => {
     const { body } = await supertest.agent(app.getHttpServer())
-      .put('/player/ffffffff-ffff-ffff-ffff-ffffffffffff')
+      .put('/player/c47050f8-ca68-410f-8182-837c1840ab15')
       .set('Accept', 'application/json')
       .send(payload)
       .expect('Content-Type', /json/)
@@ -69,20 +69,21 @@ describe('Player Controller', () => {
   })
 
   it('POST /player/register VET', async () => {
+    const { body } = 
     await supertest.agent(app.getHttpServer())
       .post('/player/register')
       .set('Accept', 'application/json')
       .send({ id: player.id, type: RankingType.VET })
-      .expect(204)
+      .expect(204)      
   })
 
   it('POST /player/register, try register a fake user', async () => {
     const { body } = await supertest.agent(app.getHttpServer())
       .post('/player/register')
       .set('Accept', 'application/json')
-      .send({ id: 'ffffffff-ffff-ffff-ffff-ffffffffffff', type: RankingType.VET })
+      .send({ id: 'c47050f8-ca68-410f-8182-837c1840ab15', type: RankingType.VET })
       .expect(404)
-
+  
     expect(body).toStrictEqual({ statusCode: 404, message: 'Invalid user', error: 'Not Found' })
   })
 

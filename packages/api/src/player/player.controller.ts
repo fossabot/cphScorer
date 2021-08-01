@@ -6,6 +6,7 @@ import { PlayerDTO } from './DTO/player.dto'
 import { ApiCreatedResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { UpdateInsertPlayerDto } from './DTO/updateInsertPlayer.dto'
 import { RegisterPlayerDto } from './DTO/registerPlayer.dto'
+import { UUIDDTO } from '../util/uuid.dto'
 
 @ApiTags('Player')
 @Controller('player')
@@ -39,8 +40,8 @@ export class PlayerController {
 
   @Put('/:id')
   @ApiOkResponse({ description: 'Update one player', type: PlayerDTO })
-  @ApiNotFoundResponse({ description: 'Players is unknow' })
-  async update (@Param('id') id: string, @Body() player: UpdateInsertPlayerDto): Promise<PlayerDTO> {
+  @ApiNotFoundResponse({ description: 'Player is unknow' })
+  async update (@Param() { id }: UUIDDTO, @Body() player: UpdateInsertPlayerDto): Promise<PlayerDTO> {
     const useCase = new UpdatePlayer(this.playerService.dao)
     const res = await useCase.execute(id, player)
 
@@ -53,7 +54,7 @@ export class PlayerController {
   @Post('/register')
   @HttpCode(204)
   @ApiNoContentResponse({ description: 'Player is registered' })
-  @ApiNotFoundResponse({ description: 'Players is unknow' })
+  @ApiNotFoundResponse({ description: 'Player is unknow' })
   async registerPlayer (@Body() data: RegisterPlayerDto): Promise<void> {
     const useCase = new RegisterPlayer(this.playerService.dao, this.rankingService.dao)
 

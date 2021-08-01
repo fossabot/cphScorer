@@ -83,7 +83,7 @@ class mockRanginkProvider implements RankingProvider {
   }
 
   async getRanking(type: RankingType): Promise<Ranking[]> { return [] }
-  async createRanking(player: Partial<Player>, type: RankingType) { }
+  async createRanking(player: Partial<Player>, type: RankingType) { return new Ranking({id: '2'}) }
 }
 
 class mockRoundProvider implements RoundProvider {

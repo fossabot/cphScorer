@@ -19,7 +19,9 @@ export class RankingDao implements RankingProvider {
   }
 
   public async update (id: string, ranking: Partial<Ranking>): Promise<void> {
-    const r = await this.findRanking(id, ranking.type as any)
+    const r = await this.rankingRepository.findOneOrFail({
+      where: { id, type: ranking.type }
+    })
 
     await this.rankingRepository.save(Object.assign(r, ranking))
   }
@@ -27,7 +29,7 @@ export class RankingDao implements RankingProvider {
   public async getRanking (type: RankingType): Promise<Ranking[]> {
     return (await this.rankingRepository.createQueryBuilder('ranking')
       .leftJoinAndSelect('ranking.players', 'players')
-      .select(['ranking.participation', 'ranking.point', 'ranking.goalAverage', 'players.firstName', 'players.lastName'])
+      .select(['ranking.id', 'ranking.participation', 'ranking.point', 'ranking.goalAverage', 'players.firstName', 'players.id', 'players.lastName'])
       .where('ranking.type = :type', { type })
       .orderBy({
         'ranking.point': 'DESC',
@@ -38,13 +40,13 @@ export class RankingDao implements RankingProvider {
       .map(x => x.toRanking())
   }
 
-  public async createRanking (player: Partial<Player>, type: RankingType): Promise<void> {
+  public async createRanking (player: Partial<Player>, type: RankingType): Promise<Ranking> {
     const ranking = new RankingEntity()
     const playerEntity = new PlayerEntity()
     playerEntity.fromPlayer(player)
 
     ranking.type = type
     ranking.players = [playerEntity]
-    await this.rankingRepository.save(ranking)
+    return (await this.rankingRepository.save(ranking)).toRanking()
   }
 }

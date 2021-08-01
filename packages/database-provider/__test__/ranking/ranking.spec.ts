@@ -12,7 +12,8 @@ describe('Ranking dao', () => {
   let idSen: any
   let idVet: any
   let toCreate: any
-  const toRanking: any[]= []
+  let rankingSen: any
+  let rankingVet: any  
 
   beforeAll(async () => {
     await connection.create()
@@ -20,13 +21,14 @@ describe('Ranking dao', () => {
 
     await playerDao.list().then(x => {
       idSen = x[0].id
-      idVet = x[4].id
-      toRanking.push(x[1].id)
-      toRanking.push(x[3].id)
+      idVet = x[4].id      
       toCreate = x[8].id
     })
 
     dao = new RankingDao(getConnection().getRepository(RankingEntity))
+
+    rankingSen = await dao.getRanking(RankingType.SEN)    
+    rankingVet = await dao.getRanking(RankingType.VET)    
   })
 
   afterAll(async () => {
@@ -48,32 +50,32 @@ describe('Ranking dao', () => {
   })
 
   it('update ranking SEN', async () => {
-    await dao.update(idSen, { point: 3, goalAverage: 10, type: RankingType.SEN })
-    const ranking = (await dao.findRanking(idSen, RankingType.SEN)) as any
+    await dao.update(rankingSen[0].id, { point: 3, goalAverage: 10, type: RankingType.SEN })
+    const ranking = (await dao.findRanking(rankingSen[0].players[0].id, RankingType.SEN)) as any
 
     expect(ranking.point).toBe(3)
     expect(ranking.goalAverage).toBe(10)
   })
 
   it('update ranking VET', async () => {
-    await dao.update(idVet, { point: 3, goalAverage: 10, type: RankingType.VET })
-    const ranking = (await dao.findRanking(idVet, RankingType.VET)) as any
+    await dao.update(rankingVet[0].id, { point: 3, goalAverage: 10, type: RankingType.VET })
+    const ranking = (await dao.findRanking(rankingVet[0].players[0].id, RankingType.VET)) as any
 
     expect(ranking.point).toBe(3)
     expect(ranking.goalAverage).toBe(10)
   })
 
   it('get ranking SEN', async () => {
-    await dao.update(toRanking[0], { point: 2, goalAverage: 10, participation: 2, type: RankingType.SEN })
-    await dao.update(toRanking[1], { point: 2, goalAverage: 10, type: RankingType.SEN })
+    await dao.update(rankingSen[1].id, { point: 2, goalAverage: 10, participation: 2, type: RankingType.SEN })
+    await dao.update(rankingSen[2].id, { point: 2, goalAverage: 10, type: RankingType.SEN })
 
     const ranking = await dao.getRanking(RankingType.SEN)
 
     expect(ranking.length).toBe(4)
     expect(ranking.findIndex(x => x.players[0].firstName === 'player0')).toBe(0)
     expect(ranking.findIndex(x => x.players[0].firstName === 'player1')).toBe(2)
-    expect(ranking.findIndex(x => x.players[0].firstName === 'player2')).toBe(3)
-    expect(ranking.findIndex(x => x.players[0].firstName === 'player3')).toBe(1)
+    expect(ranking.findIndex(x => x.players[0].firstName === 'player2')).toBe(1)
+    expect(ranking.findIndex(x => x.players[0].firstName === 'player3')).toBe(3)
 
   })
 

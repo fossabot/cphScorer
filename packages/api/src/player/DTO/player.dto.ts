@@ -1,9 +1,11 @@
 import { Player } from '@cph-scorer/model'
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNotEmpty } from 'class-validator'
+import { IsBoolean, IsNotEmpty, IsUUID } from 'class-validator'
 
 export class PlayerDTO extends Player {
   @ApiProperty()
+  @IsNotEmpty()
+  @IsUUID('4')
   public id: string
 
   @ApiProperty()
@@ -15,5 +17,6 @@ export class PlayerDTO extends Player {
   public lastName: string
 
   @ApiProperty()
+  @IsBoolean()
   public register: boolean
 }
