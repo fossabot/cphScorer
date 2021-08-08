@@ -16,7 +16,8 @@ export default {
   collectCoverageFrom: [
     "src/**/*.ts",
     "!src/app.module.ts",
-    "!src/main.ts"
+    "!src/main.ts",
+    "!src/config/*.ts"
   ],
-  coverageReporters: ['text-summary', 'lcov']  
+  coverageReporters: ['text', 'lcov']  
 }
