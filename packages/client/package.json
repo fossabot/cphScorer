@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@nuxtjs/stylelint-module": "^4.0.0",
-    "chromedriver": "^91.0.1",
+    "chromedriver": "^92.0.1",
     "js-standard": "^1.0.1",
     "nightwatch": "^1.7.6",
     "node-sass": "^6.0.1",
