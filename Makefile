@@ -1,6 +1,6 @@
 .DEFAULT_GOAL:up-dev-env
 
-.PHONY: up-dev-env down-dev-env connect-db compile format test import
+.PHONY: up-dev-env down-dev-env connect-db connect-db-keycloak compile format test import rebuild-image
 
 CURRENT_GID := $(shell id -u)
 CURRENT_UID := $(shell id -g)
@@ -35,3 +35,6 @@ test:
 
 import: 
 	npx ts-node --project packages/database-provider/tsconfig.json -p -e "import connection from './packages/database-provider/__test__/connection';connection.create().then(()=> {connection.close().then(() => console.log('ok'))})"
+
+rebuild-image:
+	docker-compose build
