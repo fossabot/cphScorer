@@ -12,9 +12,6 @@
     },
     {
       "path": "api"
-    },
-    {
-      "path": "client"
     }
   ]
 }
