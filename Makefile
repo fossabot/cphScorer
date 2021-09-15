@@ -12,7 +12,6 @@ export CURRENT_NAME
 
 up-dev-env:
 	mkdir -p data/psql			
-	mkdir -p data/keycloak			
 	docker-compose up -d
 
 down-dev-env:
@@ -20,9 +19,6 @@ down-dev-env:
 
 connect-db:
 	docker run -e PGPASSWORD='psql' --net 'cphscorer_dbnet' -it --rm  postgres:13.0-alpine psql -h 192.168.5.5 -d psql -U psql
-
-connect-db-keycloak:
-	docker run -e PGPASSWORD='psql' --net 'cphscorer_dbnet' -it --rm  postgres:13.0-alpine psql -h 192.168.5.10 -d psql -U psql
 
 compile:
 	lerna run compile
