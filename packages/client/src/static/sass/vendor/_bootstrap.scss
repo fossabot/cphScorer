@@ -1,0 +1,12 @@
+//bootstrap required
+@use "~bootstrap/scss/functions";
+@use "~bootstrap/scss/variables";
+@use "~bootstrap/scss/mixins";
+
+//reset css
+@use "~bootstrap/scss/reboot";
+
+//bootstrap component
+@use "~bootstrap/scss/helpers";
+@use "~bootstrap/scss/utilities";
+@use "~bootstrap/scss/grid";

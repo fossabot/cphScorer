@@ -60,3 +60,4 @@ lib/
 coverage/
 data/
 dist/
+.cache/
