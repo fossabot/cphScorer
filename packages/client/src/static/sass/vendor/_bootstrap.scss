@@ -1,12 +1,24 @@
 //bootstrap required
-@use "~bootstrap/scss/functions";
-@use "~bootstrap/scss/variables";
-@use "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/root";
 
 //reset css
-@use "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/reboot";
 
 //bootstrap component
-@use "~bootstrap/scss/helpers";
-@use "~bootstrap/scss/utilities";
-@use "~bootstrap/scss/grid";
+@import "~bootstrap/scss/containers";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/nav";
+@import "~bootstrap/scss/navbar";
+@import "~bootstrap/scss/card";
+@import "~bootstrap/scss/list-group";
+@import "~bootstrap/scss/forms";
+@import "~bootstrap/scss/buttons";
+@import "~bootstrap/scss/alert";
+
+//build utilities & helper
+@import "~bootstrap/scss/helpers";
+@import "~bootstrap/scss/utilities";
+@import "~bootstrap/scss/utilities/api";

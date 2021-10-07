@@ -1,0 +1,18 @@
+include ../card/card.pug
+
++card
+    div(x-data="registerInput")
+        form.needs-validation(@submit="submit($event)")
+            label.form-label(for="exampleDataList") Ajouter un joueur
+            input.form-control(list="datalistOptions",id="exampleDataList",placeholder="Taper pour rechercher",name="player",required)
+            .invalid-feedback Le champ est obligatoire        
+            datalist(id="datalistOptions")
+                template(x-for="p in player")
+                    option(:value="`${p.firstName} - ${p.lastName}`",:data-id="p.id")                    
+            .d-flex.justify-content-between.align-items-end.mt-3
+                div
+                    template(x-for="rank in rankingType")
+                        .form-check.form-check-inline
+                            input.form-check-input(type="radio", name="rankingType", :id="rank", :value="rank",required)
+                            label.form-check-label.register-input__radio-label(:for="rank",x-text="rank") 
+                button.btn.btn-primary(type="submit",@click="valid($event)") valider            

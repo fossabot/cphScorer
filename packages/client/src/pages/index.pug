@@ -1,5 +1,16 @@
-html
-    head 
-        link(rel="stylesheet" href="../static/sass/index.scss")
-    body
-        h1 Hello World
+extends ../layout/default.pug
+
+block variables
+    - var page = 0;
+
+block srcipt
+    script(src="../static/js/index.js", defer) 
+
+block content     
+    .row.justify-content-center
+        .col.col-lg-4
+            include ../components/register-input/register-input.pug
+        
+    .row.justify-content-center.mt-3
+        .col.col-lg-4
+            include ../components/register/register.pug

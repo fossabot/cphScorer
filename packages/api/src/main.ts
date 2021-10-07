@@ -7,7 +7,7 @@ import { Configuration } from './config/config'
 const logger = new Logger('Application')
 
 async function bootstrap (): Promise<void> {
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create(AppModule, { cors: true })
 
   if (Configuration.instanceOf().env !== 'PROD') setSwagger(app)
 
