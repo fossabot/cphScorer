@@ -18,8 +18,9 @@
     "build": "rimraf dist && parcel build src/pages/*.pug"
   },
   "dependencies": {
+    "@cph-scorer/model": "^1.0.0-alpha.0",
+    "@popperjs/core": "^2.10.2",
     "alpinejs": "^3.4.2",
-    "regenerator-runtime": "^0.13.9",
-    "@cph-scorer/model": "^1.0.0-alpha.0"
+    "regenerator-runtime": "^0.13.9"
   }
 }
