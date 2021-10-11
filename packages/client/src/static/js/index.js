@@ -1,13 +1,15 @@
 import "regenerator-runtime/runtime.js";
 import Alpine from 'alpinejs'
 import RegisterStore from './store/register'
-import registerInput from "../../components/register-input/register-input";
+import RegisterInput from "../../components/register-input/register-input";
+import Register from "../../components/register/register";
 
 window.Alpine = Alpine
 
 document.addEventListener('alpine:init', () => {    
-    registerInput()
     RegisterStore()
+    RegisterInput()
+    Register()
 })
 
 Alpine.start()

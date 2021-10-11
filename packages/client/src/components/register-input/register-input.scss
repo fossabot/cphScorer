@@ -1,3 +1,5 @@
-.register-input__radio-label{
-    text-transform: lowercase;
+.register-input {
+    &__radio-label {
+        text-transform: lowercase;
+    }
 }
