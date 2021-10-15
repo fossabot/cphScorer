@@ -1,0 +1,43 @@
+.match{
+    border : 1px solid bootstrap.$gray-500;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 3rem;
+    height: calc(100% - 3rem);
+
+    &__header{
+        text-align: center;
+        padding: .5rem .5rem .8rem .5rem;
+        background-color: bootstrap.$blue-100;
+        border-bottom: 1px solid bootstrap.$gray-500;
+        font-weight: bold;
+    }
+
+    &__body{
+        display: flex;
+        height: calc(100% - 3rem);
+    }
+
+    &__score{
+        width: 60px;
+        border-left: 1px solid bootstrap.$gray-500;
+        border-right: 1px solid bootstrap.$gray-500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__team{
+        max-width: 124px;
+        padding: .5rem .5rem 0 .5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    &__player{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

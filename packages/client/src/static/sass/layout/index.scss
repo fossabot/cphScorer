@@ -6,3 +6,12 @@ body{
 .start-button{
     left: unset;
 }
+
+.print-btn{
+    position: absolute;
+    right: 0;
+
+    &__container{
+        position: relative;
+    }
+}

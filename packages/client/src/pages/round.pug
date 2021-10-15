@@ -1,0 +1,20 @@
+extends ../layout/default.pug
+
+block variables
+    - var page = 1;
+
+block srcipt
+    script(src="../static/js/round.js", defer) 
+
+block content   
+    ul.nav.nav-tabs.print-btn__container(x-data="round")
+        template(x-for="i in numberTotalOfRound")
+            li.nav-item(:key="i")
+                button.nav-link(x-text="`Partie ${i}`", :class="i === selectedRound && 'active'",:data-index="i", @click="changeSelected($event)")
+        li
+            button.print-btn.btn.btn-outline-primary.btn-sm(@click="window.print()") Imprimer
+    
+    .row.justify-content-center.justify-content-lg-start(x-data="match")
+        template(x-for="(match, index) in $store.RoundStore.round.matchs")
+            .col.col-11.col-lg-3.print-col
+                include ../components/match/match.pug
