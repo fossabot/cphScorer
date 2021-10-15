@@ -4,8 +4,8 @@ include ../modal/modal.pug
 div(x-data="registerInput")
     +card
         form.js-register-form(@submit="submit($event)")
-            label.form-label(for="exampleDataList") Ajouter un joueur
-            input.form-control(list="datalistOptions" id="exampleDataList" placeholder="Taper pour rechercher" name="player",required)
+            label.form-label(for="playerList") Ajouter un joueur
+            input.form-control(list="datalistOptions" id="playerList" placeholder="Taper pour rechercher" name="player",required)
             .invalid-feedback Le champ est obligatoire        
             datalist(id="datalistOptions")
                 template(x-for="p in player")
@@ -21,12 +21,12 @@ div(x-data="registerInput")
     +modal("Ajouter un nouveau joueur","js-modal-add")
         form.px-5(@submit="addPlayer($event)")
             .mb-3
-                label.form-label(for="exampleDataList") Prénom
-                input.form-control(name="firstName",required)
+                label.form-label(for="firstName") Prénom
+                input.form-control(name="firstName",id="firstName",required)
                 .invalid-feedback Le champ est obligatoire
             .mb-5
-                label.form-label(for="exampleDataList") Nom
-                input.form-control(name="lastName",required)
+                label.form-label(for="lastName") Nom
+                input.form-control(name="lastName",id="lastName",required)
                 .invalid-feedback Le champ est obligatoire
             .mb-3.d-flex.justify-content-end
                 button.btn.btn-outline-secondary.me-3(type="button",data-bs-dismiss="modal") Fermer

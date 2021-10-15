@@ -25,10 +25,9 @@ function loadPage() {
             Alpine.store('RoundStore').create(data)
         },
 
-        async changeSelected({ target }) {
-            const nextRound = Number.parseInt(target.dataset.index)
-            await this.init(nextRound)
-            this.selectedRound = nextRound
+        async changeSelected({ target }) {            
+            this.selectedRound = Number.parseInt(target.dataset.index)
+            await this.init()
         }
     }))
 }

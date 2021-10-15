@@ -28,6 +28,7 @@ export default function () {
             if (id) {
                 await post(PLAYER.CREATE_REGISTER, { id, type: data.get('rankingType') })
 
+                localStorage.setItem('rankingType', data.get('rankingType'))
                 Alpine.store('RegisterStore').add(data.get('player'))
                 event.target.classList.remove('was-validated')
 
@@ -48,6 +49,8 @@ export default function () {
 
             const type = new FormData(form).get('rankingType')
             await post(PLAYER.CREATE_REGISTER, { id: res.id, type })
+
+            localStorage.setItem('rankingType', type)
 
             form.classList.remove('was-validated')
             clear(form.querySelector('input[name="player"]'))

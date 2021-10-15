@@ -28,3 +28,14 @@ export async function post(url, data) {
     })
     return onResult(response)
 }
+
+export async function put(url,data){
+    const response = await fetch(`${ENDPOINT}${url}`, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+    return onResult(response)
+}
