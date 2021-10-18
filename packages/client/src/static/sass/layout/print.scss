@@ -41,4 +41,8 @@
         flex: 0 0 auto;
         width: 50% !important;
     }
+
+    table *{
+        color: bootstrap.$black !important
+    }
 }
