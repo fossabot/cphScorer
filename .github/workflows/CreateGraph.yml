@@ -1,0 +1,26 @@
+name: Create graph dependencies
+
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+  create-graph:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@main
+
+      - name: Create graph dependencies 📈
+        uses: lerdajs/lerna-graph-action@1.0.0
+        with: 
+          rootPath: .
+          imagePath: .github/graph-dependencies.png
+
+      - name: Commit file ⬆️
+        uses: EndBug/add-and-commit@v7
+        with:
+          add: '[".github/graph-dependencies.png"]'
+          message: 'chore: update graph-dependencies [skip ci]'
