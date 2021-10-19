@@ -11,7 +11,7 @@ export class UpdateScore {
       this.teamProvider.update(match.teamTwo.id, match.teamTwo.score)
     ])
 
-    if (match.teamOne.score === 13) {
+    if (Number.parseInt(match.teamOne.score as any) === 13) {
       await Promise.all([
         this.update(match.teamOne, match.teamOne.score - match.teamTwo.score, 3, type),
         this.update(match.teamTwo, match.teamTwo.score - match.teamOne.score, 1, type)

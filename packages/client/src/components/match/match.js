@@ -33,6 +33,9 @@ export default function () {
                 type: localStorage.rankingType
             })
 
+            event.target.querySelectorAll('input').forEach(input => input.value = "")
+            event.target.classList.remove('was-validated')
+
             this.modal.hide()
         },
 
