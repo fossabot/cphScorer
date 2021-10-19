@@ -1,18 +1,18 @@
-body{
-    min-height: 100vh;
-    min-width: 100vw;    
-    overflow-x: hidden;
+body {
+  min-height: 100vh;
+  min-width: 100vw;
+  overflow-x: hidden;
 }
 
-.start-button{
-    left: unset;
+.start-button {
+  left: unset;
 }
 
-.print-btn{
-    position: absolute;
-    right: 0;
+.print-btn {
+  position: absolute;
+  right: 0;
 
-    &__container{
-        position: relative;
-    }
+  &__container {
+    position: relative;
+  }
 }

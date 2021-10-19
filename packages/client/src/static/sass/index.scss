@@ -2,8 +2,6 @@
 @use './vendor/font';
 @use './layout/index';
 
-@import './config/variable';
-
 @import '../../components/navbar/navbar';
 @import '../../components/register-input/register-input';
 @import '../../components/register/register';
