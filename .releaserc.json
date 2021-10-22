@@ -1,0 +1,35 @@
+{
+    "tagFormat": "v${version}",
+    "repositoryUrl": "https://github.com/corentin-verquin/test.git",
+    "plugins": [
+        "@semantic-release/commit-analyzer",
+        "@semantic-release/release-notes-generator",
+        "@semantic-release/changelog",
+        [
+            "@semantic-release/exec",
+            {
+                "prepareCmd": "lerna version --no-push --no-git-tag-version ${nextRelease.version} --yes",
+                "publishCmd": "lerna exec --scope '{@cph-scorer/model,@cph-scorer/core,@cph-scorer/database-provider}' -- npm publish"
+            }
+        ],
+        [
+            "@semantic-release/git",
+            {
+                "assets": [
+                    "package.json",
+                    "yarn.lock",
+                    "packages/api/package.json",
+                    "packages/client/package.json",
+                    "packages/model/package.json",
+                    "packages/database-provider/package.json",
+                    "packages/core/package.json",
+                    "lerna.json",
+                    "CHANGELOG.md"
+                ],
+                "message": "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"
+            }
+        ],
+        "@semantic-release/github"
+    ],
+    "branches": "develop"
+}

@@ -5,7 +5,6 @@
   "types": "lib/index.d.ts",
   "author": "corentin-verquin",
   "license": "MIT",
-  "private": true,
   "scripts": {
     "format": "ts-standard --report stylish --fix src",
     "compile": "tsc -b --verbose",

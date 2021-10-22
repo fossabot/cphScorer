@@ -1,0 +1,55 @@
+name: Release
+
+on: [ workflow_dispatch ]  
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NODE_REGISTRY_AUTH_TOKEN }}
+      HUSKY: 0
+      
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@main
+
+      - name: Setup node env ⚙️
+        uses: actions/setup-node@v2.1.4
+        with:
+          node-version: 14
+          always-auth: true
+          registry-url: ${{ secrets.NODE_REGISTRY_URL }}
+
+      - name: Install lerna ⬇️
+        run: npm install --global lerna
+
+      - name: Install dependencies 👨🏻‍💻
+        run: lerna bootstrap
+
+      - name: Compile libraries 🏗
+        run: lerna run --scope '{@cph-scorer/model,@cph-scorer/core,@cph-scorer/database-provider}' compile        
+      
+      - name: Create release 🏗
+        uses: cycjimmy/semantic-release-action@v2.5.4
+        id: semantic-release
+        with:
+          semantic_version: 18.0.0
+          extra_plugins: |
+            @semantic-release/commit-analyzer@8.0.1
+            @semantic-release/release-notes-generator@9.0.3
+            @semantic-release/changelog@5.0.1
+            @semantic-release/github@7.2.3
+            @semantic-release/git@9.0.0
+            @semantic-release/exec@6.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      
+      - name: Clear node_modules
+        run: lerna clean --yes && rm -rf node_modules
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: package
+          path: 'packages/**/package.json'       
+          retention-days: 1
