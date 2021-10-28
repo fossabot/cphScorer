@@ -1,4 +1,7 @@
-import { PickType } from '@nestjs/swagger'
-import { PlayerDTO } from './player.dto'
+import { PickType } from "@nestjs/swagger";
+import { PlayerDTO } from "./player.dto";
 
-export class UpdateInsertPlayerDto extends PickType(PlayerDTO, ['firstName', 'lastName'] as const) { }
+export class UpdateInsertPlayerDto extends PickType(PlayerDTO, [
+  "firstName",
+  "lastName",
+] as const) {}

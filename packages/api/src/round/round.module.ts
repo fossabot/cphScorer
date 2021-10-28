@@ -1,10 +1,10 @@
-import { Module } from '@nestjs/common'
-import { DataBaseModule } from '../config/database.module'
-import { RoundService } from './roud.service'
+import { Module } from "@nestjs/common";
+import { DataBaseModule } from "../config/database.module";
+import { RoundService } from "./roud.service";
 
 @Module({
   imports: [DataBaseModule],
   providers: [RoundService],
-  exports: [RoundService]
+  exports: [RoundService],
 })
-export class RoundModule { }
+export class RoundModule {}

@@ -1,12 +1,12 @@
 /* global Alpine */
 
 export default function () {
-  Alpine.store('RoundStore', {
-    init () {
-      this.round = {}
+  Alpine.store("RoundStore", {
+    init() {
+      this.round = {};
     },
-    create (round) {
-      this.round = { ...round }
-    }
-  })
+    create(round) {
+      this.round = { ...round };
+    },
+  });
 }

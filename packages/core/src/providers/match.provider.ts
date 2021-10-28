@@ -1,5 +1,5 @@
-import { Match, Team, Round } from '@cph-scorer/model'
+import { Match, Team, Round } from "@cph-scorer/model";
 
-export interface MatchProvider{
-  insert: (teams: Team[], round: Round) => Promise<Match>
+export interface MatchProvider {
+  insert: (teams: Team[], round: Round) => Promise<Match>;
 }

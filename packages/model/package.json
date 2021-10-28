@@ -6,11 +6,14 @@
   "author": "corentin-verquin",
   "license": "MIT",
   "scripts": {
-    "format": "ts-standard --report stylish --fix src",
+    "lint":"ts-standard --report stylish --fix src",
+    "prettier": "prettier --write src",
+    "format": "yarn lint && yarn prettier",
     "compile": "tsc -b --verbose",
     "pre-commit": "yarn format"
   },
   "devDependencies": {
+    "prettier": "^2.4.1",
     "ts-standard": "^10.0.0",
     "typescript": "^4.1.5"
   }

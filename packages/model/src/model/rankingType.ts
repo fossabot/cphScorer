@@ -1,4 +1,4 @@
-export enum RankingType{
-  SEN = 'SEN',
-  VET = 'VET',
+export enum RankingType {
+  SEN = "SEN",
+  VET = "VET",
 }

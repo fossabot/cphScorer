@@ -1,13 +1,13 @@
-import { Player } from './player'
+import { Player } from "./player";
 
 export class Team {
-  public id: string
+  public id: string;
 
-  public score: number
+  public score: number;
 
-  public players: Player[]
+  public players: Player[];
 
-  constructor (props?: Partial<Team>) {
-    if (props != null) Object.assign(this, props)
+  constructor(props?: Partial<Team>) {
+    if (props != null) Object.assign(this, props);
   }
 }

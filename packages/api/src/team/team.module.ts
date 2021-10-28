@@ -1,10 +1,10 @@
-import { Module } from '@nestjs/common'
-import { DataBaseModule } from '../config/database.module'
-import { TeamService } from './team.service'
+import { Module } from "@nestjs/common";
+import { DataBaseModule } from "../config/database.module";
+import { TeamService } from "./team.service";
 
 @Module({
   imports: [DataBaseModule],
   providers: [TeamService],
-  exports: [TeamService]
+  exports: [TeamService],
 })
-export class TeamModule { }
+export class TeamModule {}

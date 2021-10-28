@@ -1,9 +1,9 @@
-import { Module } from '@nestjs/common'
-import { RankingModule } from './ranking.module'
-import { RankingController } from './ranking.controller'
+import { Module } from "@nestjs/common";
+import { RankingModule } from "./ranking.module";
+import { RankingController } from "./ranking.controller";
 
 @Module({
   imports: [RankingModule],
-  controllers: [RankingController]
+  controllers: [RankingController],
 })
-export class RankingHttpModule { }
+export class RankingHttpModule {}

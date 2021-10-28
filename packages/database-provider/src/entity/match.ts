@@ -1,30 +1,36 @@
-import { TeamEntity } from './team'
-import { RoundEntity } from './round'
-import { plainToClass } from 'class-transformer'
-import { Match } from '@cph-scorer/model'
-import { Entity, PrimaryGeneratedColumn, OneToOne, ManyToOne, JoinColumn } from 'typeorm'
+import { TeamEntity } from "./team";
+import { RoundEntity } from "./round";
+import { plainToClass } from "class-transformer";
+import { Match } from "@cph-scorer/model";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  ManyToOne,
+  JoinColumn,
+} from "typeorm";
 
-@Entity({ name: 'match' })
+@Entity({ name: "match" })
 export class MatchEntity {
-  @PrimaryGeneratedColumn('uuid')
-  public id: string
+  @PrimaryGeneratedColumn("uuid")
+  public id: string;
 
-  @OneToOne(() => TeamEntity, { onDelete: 'CASCADE' })
+  @OneToOne(() => TeamEntity, { onDelete: "CASCADE" })
   @JoinColumn()
-  public teamOne: TeamEntity
+  public teamOne: TeamEntity;
 
-  @OneToOne(() => TeamEntity, { onDelete: 'CASCADE' })
+  @OneToOne(() => TeamEntity, { onDelete: "CASCADE" })
   @JoinColumn()
-  public teamTwo: TeamEntity
+  public teamTwo: TeamEntity;
 
-  @ManyToOne(() => RoundEntity, { onDelete: 'CASCADE' })
-  public round: RoundEntity
+  @ManyToOne(() => RoundEntity, { onDelete: "CASCADE" })
+  public round: RoundEntity;
 
-  public toMatch (): Match {
-    return plainToClass(Match, this)
+  public toMatch(): Match {
+    return plainToClass(Match, this);
   }
 
-  public fromMatch (plain: Partial<Match>): void {
-    Object.assign(this, plainToClass(MatchEntity, plain))
+  public fromMatch(plain: Partial<Match>): void {
+    Object.assign(this, plainToClass(MatchEntity, plain));
   }
 }

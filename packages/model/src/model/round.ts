@@ -1,13 +1,13 @@
-import { Match } from './match'
+import { Match } from "./match";
 
 export class Round {
-  public id: string
+  public id: string;
 
-  public roundNumber: number
+  public roundNumber: number;
 
-  public matchs: Match[]
+  public matchs: Match[];
 
-  constructor (props?: Partial<Round>) {
-    if (props != null) Object.assign(this, props)
+  constructor(props?: Partial<Round>) {
+    if (props != null) Object.assign(this, props);
   }
 }

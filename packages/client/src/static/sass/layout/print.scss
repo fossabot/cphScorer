@@ -1,5 +1,7 @@
 @media print {
-  @page { size: landscape; }
+  @page {
+    size: landscape;
+  }
 
   .navbar,
   .nav {

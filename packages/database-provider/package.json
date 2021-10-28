@@ -6,7 +6,9 @@
   "author": "corentin-verquin",
   "license": "MIT",
   "scripts": {
-    "format": "ts-standard --report stylish --fix src",
+    "lint":"ts-standard --report stylish --fix src",
+    "prettier": "prettier --write src",
+    "format": "yarn lint && yarn prettier",
     "compile": "tsc -b --verbose",
     "test": "jest --runInBand",
     "pre-commit": "yarn format && yarn test"
@@ -15,6 +17,7 @@
     "@types/jest": "^27.0.1",
     "@types/lodash": "^4.14.168",
     "jest": "^27.0.6",
+    "prettier": "^2.4.1",
     "ts-jest": "^27.0.3",
     "ts-node": "^10.1.0",
     "ts-standard": "^10.0.0",
