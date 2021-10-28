@@ -38,13 +38,13 @@ jobs:
         run:  lerna bootstrap
 
       - name: Run compile 🏗
-        run: lerna run compile
+        run: make compile
 
       - name: Run linter 👀
-        run: lerna run format
+        run: make format
 
       - name: Run tests 🧪
-        run: lerna run test
+        run: make test
 
       - name: Upload coverage ⬆️
         run: npx codecov --token=${{ secrets.CODECOV_TOKEN }}      
