@@ -7,13 +7,13 @@
   }
 
   .container {
-    padding-top: 0 !important;
     max-width: none !important;
+    padding-top: 0 !important;
   }
 
   .match {
-    margin-top: 1rem;
     height: auto !important;
+    margin-top: 1rem;
 
     &__body {
       height: auto !important;
@@ -24,9 +24,9 @@
     }
 
     &__team {
+      font-size: 1.1rem;
       max-width: none !important;
       width: 50%;
-      font-size: 1.1rem;
 
       &:first-child {
         border-right: 1px solid bootstrap.$gray-500;

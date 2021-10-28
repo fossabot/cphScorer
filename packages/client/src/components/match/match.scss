@@ -1,17 +1,17 @@
 .match {
   border: 1px solid bootstrap.$gray-500;
   border-radius: 3px;
-  overflow: hidden;
-  margin-top: 3rem;
-  height: calc(100% - 3rem);
   cursor: pointer;
+  height: calc(100% - 3rem);
+  margin-top: 3rem;
+  overflow: hidden;
 
   &__header {
-    text-align: center;
-    padding: 0.5rem 0.5rem 0.8rem 0.5rem;
     background-color: bootstrap.$blue-100;
     border-bottom: 1px solid bootstrap.$gray-500;
     font-weight: bold;
+    padding: 0.5rem 0.5rem 0.8rem;
+    text-align: center;
   }
 
   &__body {
@@ -20,25 +20,25 @@
   }
 
   &__score {
-    width: 60px;
+    align-items: center;
     border-left: 1px solid bootstrap.$gray-500;
     border-right: 1px solid bootstrap.$gray-500;
     display: flex;
-    align-items: center;
     justify-content: center;
+    width: 60px;
   }
 
   &__team {
-    max-width: 124px;
-    padding: 0.5rem 0.5rem 0 0.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    max-width: 124px;
+    padding: 0.5rem 0.5rem 0;
   }
 
   &__player {
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
