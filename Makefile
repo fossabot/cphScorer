@@ -1,6 +1,6 @@
 .DEFAULT_GOAL:up-dev-env
 
-.PHONY: up-dev-env down-dev-env connect-db connect-db-keycloak compile format test import rebuild-image
+.PHONY: up-dev-env down-dev-env connect-db connect-db-keycloak compile format test import rebuild-image e2e-test
 
 CURRENT_GID := $(shell id -u)
 CURRENT_UID := $(shell id -g)
@@ -28,6 +28,9 @@ format:
 
 test:
 	lerna run test
+
+e2e-test:
+	lerna run --scope '@cph-scorer/e2e-test' start -- -e $(BROWSER)	
 
 import: 
 	npx ts-node --project packages/database-provider/tsconfig.json -p -e "import connection from './packages/database-provider/__test__/connection';connection.create().then(()=> {connection.close().then(() => console.log('ok'))})"

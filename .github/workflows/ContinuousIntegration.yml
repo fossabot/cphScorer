@@ -1,0 +1,92 @@
+name: Continuous Integration
+
+on: [push]
+
+jobs:
+  lint-compile-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Setup node env ⚙️
+        uses: actions/setup-node@v2.1.4
+        with:
+          node-version: 16
+
+      - name: Setup database 🗄️
+        uses: harmon758/postgresql-action@v1
+        with:
+          postgresql version: '13.0-alpine'
+          postgresql db: 'psql'
+          postgresql user: 'psql'
+          postgresql password: 'psql'
+
+      - name: Install lerna ⬇️
+        run: npm install --global lerna
+
+      - name: Checkout 🛎
+        uses: actions/checkout@main
+
+      - name: Cache node_modules 📦
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}    
+          restore-keys: |
+            ${{ runner.os }}-modules-                                   
+
+      - name: Install dependencies 👨🏻‍💻
+        run:  lerna bootstrap
+
+      - name: Run compile 🏗
+        run: make compile 
+
+      - name: Run linter 👀
+        run: make format      
+
+      - name: Run tests 🧪
+        run: make test
+                
+      - name: Upload coverage ⬆️
+        run: npx codecov --token=${{ secrets.CODECOV_TOKEN }}            
+
+  e2e-test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        browser: ['firefox','chrome']
+
+    steps:
+      - name: Setup node env ⚙️
+        uses: actions/setup-node@v2.1.4
+        with:
+          node-version: 16
+
+      - name: Update Chrome ⬇️
+        if: ${{ matrix.browser == 'chrome' }}
+        run: |
+          sudo sh -c 'echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list'
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          sudo apt update
+          sudo apt-get install google-chrome-stable
+      
+      - name: Install lerna ⬇️
+        run: npm install --global lerna
+
+      - name: Checkout 🛎
+        uses: actions/checkout@main
+
+      - name: Cache node_modules 📦
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}    
+          restore-keys: |
+            ${{ runner.os }}-modules-                                   
+
+      - name: Install dependencies 👨🏻‍💻
+        run:  lerna bootstrap
+
+      - name: Run e2e tests 🧪
+        run: make e2e-test BROWSER=${{ matrix.browser }}
+
