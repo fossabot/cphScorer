@@ -2,7 +2,7 @@
 
 import notification from "./notification";
 
-const ENDPOINT = process.env.ENDPOINT || "http://localhost:8000";
+const ENDPOINT = process.env.ENDPOINT;
 
 function onResult(response) {
   if (response.status >= 400) {

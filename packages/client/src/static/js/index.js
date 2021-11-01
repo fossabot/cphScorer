@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 import "regenerator-runtime/runtime.js";
 import Alpine from "alpinejs";
 import RegisterStore from "./store/register";
@@ -8,6 +10,8 @@ import { ROUND } from "./util/route";
 import notification from "./util/notification";
 
 window.Alpine = Alpine;
+
+console.log(process.env.ENDPOINT);
 
 function loadStore() {
   RegisterStore();

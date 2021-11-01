@@ -37,8 +37,9 @@ export class MatchController {
     try {
       await useCase.exec(match, type);
     } catch (e) {
-      if (e instanceof PlayerUnknowException)
+      if (e instanceof PlayerUnknowException) {
         throw new NotFoundException("Invalid user");
+      }
       throw new InternalServerErrorException(e);
     }
   }

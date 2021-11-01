@@ -1,5 +1,4 @@
 # CPH Scorer
-![](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![](https://img.shields.io/badge/Lerna-3.22.0-purple)
 ![](https://img.shields.io/badge/Node-16-yellowgreen?logo=node.js)
 ![](https://img.shields.io/badge/Yarn-1.22.0-blue?logo=yarn)
@@ -8,8 +7,10 @@
 ![](https://img.shields.io/badge/bootstrap-5.0.0-purple?logo=bootstrap)
 ![](https://img.shields.io/badge/alpinejs-3.0.0-green?logo=alpine.js)
 
+[![CI pipeline](https://github.com/corentin-verquin/cphScorer/actions/workflows/ContinuousIntegration.yml/badge.svg)](https://github.com/corentin-verquin/cphScorer/actions/workflows/ContinuousIntegration.yml)
 [![codecov](https://codecov.io/gh/corentin-verquin/cphScorer/branch/develop/graph/badge.svg?token=GJAQF8DM3Y)](https://codecov.io/gh/corentin-verquin/cphScorer)
-
+![version](https://img.shields.io/github/v/release/corentin-verquin/cphScorer)
+![license MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ## Prerequistes
 - node >= 16.0.0
 - yarn >= 1.22.0
@@ -41,11 +42,16 @@ make format
 
 # Compile packages
 make compile
-```
 
-## Run tests
-```bash
+# Test packages
 make test
+
+# End to end test (need browser target chrome or firefox)
+make e2e-test
+# example make e2e-test BROWSER=chrome
+
+# Rebuild custom psql image 
+rebuild-image
 ```
 
 ## Graph dependencies

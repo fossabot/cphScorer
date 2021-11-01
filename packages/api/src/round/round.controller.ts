@@ -65,8 +65,9 @@ export class RoundController {
     try {
       return await useCase.exec(round);
     } catch (e) {
-      if (e instanceof EntityNotFoundError)
+      if (e instanceof EntityNotFoundError) {
         throw new NotFoundException("Invalid round");
+      }
       throw new InternalServerErrorException(e);
     }
   }
