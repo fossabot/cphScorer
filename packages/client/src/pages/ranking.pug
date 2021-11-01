@@ -38,7 +38,7 @@ block content
       tbody 
         template(x-for="(r, index) in rankings")
           tr
-            th(x-text="index", scope="row")
+            th(x-text="index+1", scope="row")
             td(x-text="`${r.players[0].firstName} - ${r.players[0].lastName}`")
             td(x-text="r.point")
             td(x-text="r.goalAverage")
