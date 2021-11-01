@@ -30,7 +30,11 @@ div(x-data="registerInput")
                 :for="rank",
                 x-text="rank"
               ) 
-        button.btn.btn-primary(type="submit", @click="valid($event)") Valider
+        button.btn.btn-primary(
+          type="submit",
+          @click="valid($event)",
+          data-e2e-valid-register
+        ) Valider
 
   +modal("Ajouter un nouveau joueur","js-modal-add")
     form.px-5(@submit="addPlayer($event)")
@@ -47,4 +51,8 @@ div(x-data="registerInput")
           type="button",
           data-bs-dismiss="modal"
         ) Fermer
-        button.btn.btn-primary(type="submit", @click="valid($event)") Valider
+        button.btn.btn-primary(
+          type="submit",
+          @click="valid($event)",
+          data-e2e-valid-modal
+        ) Valider

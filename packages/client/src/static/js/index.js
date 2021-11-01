@@ -11,8 +11,6 @@ import notification from "./util/notification";
 
 window.Alpine = Alpine;
 
-console.log(process.env.ENDPOINT);
-
 function loadStore() {
   RegisterStore();
 }
