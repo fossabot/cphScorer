@@ -18,7 +18,7 @@
     "standard": "^16.0.4",
     "stylelint": "^14.0.0",
     "stylelint-config-sass-guidelines": "^8.0.0",
-    "stylelint-config-standard": "^23.0.0",
+    "stylelint-config-standard": "^24.0.0",
     "stylelint-scss": "^4.0.0"
   },
   "scripts": {
