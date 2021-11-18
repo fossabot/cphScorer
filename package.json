@@ -5,7 +5,7 @@
     "packages/**/*"
   ],
   "devDependencies": {
-    "@commitlint/config-conventional": "^13.1.0",
+    "@commitlint/config-conventional": "^15.0.0",
     "codecov": "^3.8.3",
     "commitlint": "^13.1.0",
     "husky": "^7.0.1",
