@@ -95,6 +95,12 @@ jobs:
       - name: Install dependencies 👨🏻‍💻
         run:  lerna bootstrap
 
+      - name: Make envfile ⚙️
+        run: | 
+          touch .env        
+          echo 'ENDPOINT="http://localhost:8000"' >> .env
+          mv .env ./packages/client
+
       - name: Run compile 🏗
         run: make compile 
 
@@ -107,8 +113,7 @@ jobs:
           lerna run --scope '@cph-scorer/api' start &
 
       - name: Start client 🏗
-        run: |
-          cd packages/client/dist; echo echo 'ENDPOINT="http://localhost:8000"' > .env
+        run: |          
           lerna run --scope '@cph-scorer/client' build
           cd packages/client/dist; python3 -m "http.server" 1234 & 
 
