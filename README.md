@@ -11,6 +11,7 @@
 [![codecov](https://codecov.io/gh/corentin-verquin/cphScorer/branch/develop/graph/badge.svg?token=GJAQF8DM3Y)](https://codecov.io/gh/corentin-verquin/cphScorer)
 ![version](https://img.shields.io/github/v/release/corentin-verquin/cphScorer)
 ![license MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fcorentin-verquin%2FcphScorer.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fcorentin-verquin%2FcphScorer?ref=badge_shield)
 ## Prerequistes
 - node >= 16.0.0
 - yarn >= 1.22.0
@@ -65,3 +66,5 @@ rebuild-image
 ## License
 Copyright © `2021` `Corentin Verquin`.
 This project is [MIT](https://opensource.org/licenses/MIT) licensed
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fcorentin-verquin%2FcphScorer.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fcorentin-verquin%2FcphScorer?ref=badge_large)
