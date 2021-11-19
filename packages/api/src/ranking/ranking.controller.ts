@@ -3,7 +3,7 @@ import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { GetRanking } from "@cph-scorer/core";
 import { Ranking } from "@cph-scorer/model";
 import { RankingService } from "./ranking.service";
-import { RankingDTO } from "./DTO/Ranking.dto";
+import { RankingDTO } from "./DTO/ranking.dto";
 import { TypeDTO } from "../util/type.dto";
 
 @Controller("ranking")

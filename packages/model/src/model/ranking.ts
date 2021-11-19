@@ -1,5 +1,5 @@
 import { Player } from "./player";
-import { RankingType } from "./rankingType";
+import { RankingType } from "./ranking-type";
 import type { uuid } from "../types";
 
 export class Ranking {

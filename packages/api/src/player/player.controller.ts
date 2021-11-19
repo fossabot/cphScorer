@@ -27,8 +27,8 @@ import {
   ApiOkResponse,
   ApiTags,
 } from "@nestjs/swagger";
-import { UpdateInsertPlayerDto } from "./DTO/updateInsertPlayer.dto";
-import { RegisterPlayerDto } from "./DTO/registerPlayer.dto";
+import { UpdateInsertPlayerDto } from "./DTO/update-insert-player.dto";
+import { RegisterPlayerDto } from "./DTO/register-player.dto";
 import { UUIDDTO } from "../util/uuid.dto";
 
 @ApiTags("Player")

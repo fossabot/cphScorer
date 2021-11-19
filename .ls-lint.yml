@@ -1,0 +1,25 @@
+ls: 
+    packages/api/src:
+        .ts: regex:^([a-z\d]*)(-[a-z\d]+)*(\.[a-z\d]+)*$        
+
+    packages/database-provider/src:
+        .ts: kebabcase
+
+    packages/core/src:
+        .ts: kebabcase
+        .provider.ts: kebabcase
+
+    packages/model/src:
+        .ts: kebabcase
+
+    packages/e2e-test/tests:
+        .js: pointcase
+
+    packages/client/src:
+        .js: kebabcase
+        .scss: regex:^(_?[a-z\d]*)(-[a-z\d]+)*$
+        .pug: kebabcase
+
+ignore:
+    - node_modules
+    - packages/database-provider/src/migration

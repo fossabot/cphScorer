@@ -1,6 +1,6 @@
 import { PlayerProvider } from "../../providers/player.provider";
 import { RankingType, Ranking, Player, uuid } from "@cph-scorer/model";
-import { PlayerUnknowException } from "../../errors/PlayerUnknow";
+import { PlayerUnknowException } from "../../errors/player-unknow";
 import { RankingProvider } from "../../providers/ranking.provider";
 
 export class RegisterPlayer {

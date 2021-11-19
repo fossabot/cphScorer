@@ -14,7 +14,7 @@ import {
   ApiNotFoundResponse,
   ApiTags,
 } from "@nestjs/swagger";
-import { MatchUpdateDTO } from "./DTO/matchUpdate.dto";
+import { MatchUpdateDTO } from "./DTO/match-update.dto";
 
 @Controller("match")
 @ApiTags("Tournament")

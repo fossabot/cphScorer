@@ -10,7 +10,7 @@ import {
   uuid,
 } from "@cph-scorer/model";
 import { PlayerProvider } from "../../providers/player.provider";
-import { MaxCallError } from "../../errors/MaxCallError";
+import { MaxCallError } from "../../errors/max-call-error";
 import { RoundProvider } from "../../providers/round.provider";
 import { TeamProvider } from "../../providers/team.provider";
 import { MatchProvider } from "../../providers/match.provider";
