@@ -1,7 +1,6 @@
 import { TeamEntity } from "./team";
 import { RoundEntity } from "./round";
-import { plainToClass } from "class-transformer";
-import { Match } from "@cph-scorer/model";
+import { Convertor, Match, ModelConverter, uuid } from "@cph-scorer/model";
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -11,9 +10,10 @@ import {
 } from "typeorm";
 
 @Entity({ name: "match" })
-export class MatchEntity {
+@Convertor(Match, MatchEntity)
+export class MatchEntity extends ModelConverter {
   @PrimaryGeneratedColumn("uuid")
-  public id: string;
+  public id: uuid;
 
   @OneToOne(() => TeamEntity, { onDelete: "CASCADE" })
   @JoinColumn()
@@ -25,12 +25,4 @@ export class MatchEntity {
 
   @ManyToOne(() => RoundEntity, { onDelete: "CASCADE" })
   public round: RoundEntity;
-
-  public toMatch(): Match {
-    return plainToClass(Match, this);
-  }
-
-  public fromMatch(plain: Partial<Match>): void {
-    Object.assign(this, plainToClass(MatchEntity, plain));
-  }
 }

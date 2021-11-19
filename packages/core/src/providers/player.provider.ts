@@ -1,4 +1,4 @@
-import { Player } from "@cph-scorer/model";
+import { Player, uuid } from "@cph-scorer/model";
 
 export interface PlayerProvider {
   list: () => Promise<Player[]>;
@@ -7,5 +7,5 @@ export interface PlayerProvider {
 
   listRegister: () => Promise<Player[]>;
 
-  update: (id: string, player: Partial<Player>) => Promise<Player>;
+  update: (id: uuid, player: Partial<Player>) => Promise<Player>;
 }

@@ -1,10 +1,10 @@
-import { Ranking, RankingType } from "@cph-scorer/model";
+import { Ranking, RankingType, uuid } from "@cph-scorer/model";
 import { ApiProperty } from "@nestjs/swagger";
 import { PlayerDTO } from "../../player/DTO/player.dto";
 
 export class RankingDTO extends Ranking {
   @ApiProperty()
-  public id: string;
+  public id: uuid;
 
   @ApiProperty()
   public participation: number;

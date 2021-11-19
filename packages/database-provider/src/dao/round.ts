@@ -9,7 +9,7 @@ export class RoundDao implements RoundProvider {
   public async insert(roundNumber: number): Promise<Round> {
     const round = new RoundEntity();
     round.roundNumber = roundNumber;
-    return (await this.roundRepository.save(round)).toRound();
+    return (await this.roundRepository.save(round)).toModel();
   }
 
   public async getRound(roundNumber: number): Promise<Round> {
@@ -24,6 +24,6 @@ export class RoundDao implements RoundProvider {
         ],
         where: { roundNumber },
       })
-    ).toRound();
+    ).toModel();
   }
 }

@@ -1,7 +1,8 @@
 import { Player } from "./player";
+import type { uuid } from "../types";
 
 export class Team {
-  public id: string;
+  public id: uuid;
 
   public score: number;
 

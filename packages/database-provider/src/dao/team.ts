@@ -1,5 +1,5 @@
 import { TeamProvider } from "@cph-scorer/core";
-import { Player, Team } from "@cph-scorer/model";
+import { Player, Team, uuid } from "@cph-scorer/model";
 import { Repository } from "typeorm";
 import { PlayerEntity } from "../entity/player";
 import { TeamEntity } from "../entity/team";
@@ -10,18 +10,18 @@ export class TeamDao implements TeamProvider {
   public async insert(players: Player[]): Promise<Team> {
     const playerEntity = players.map((x) => {
       const p = new PlayerEntity();
-      p.fromPlayer(x);
+      p.fromModel(x);
       return p;
     });
 
     const team = new TeamEntity();
     team.players = playerEntity;
-    return (await this.teamRepository.save(team)).toTeam();
+    return (await this.teamRepository.save(team)).toModel();
   }
 
-  public async update(id: string, score: number): Promise<Team> {
+  public async update(id: uuid, score: number): Promise<Team> {
     const team = await this.teamRepository.findOneOrFail({ where: { id } });
     team.score = score;
-    return (await this.teamRepository.save(team)).toTeam();
+    return (await this.teamRepository.save(team)).toModel();
   }
 }

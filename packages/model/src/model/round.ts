@@ -1,7 +1,8 @@
 import { Match } from "./match";
+import type { uuid } from "../types";
 
 export class Round {
-  public id: string;
+  public id: uuid;
 
   public roundNumber: number;
 

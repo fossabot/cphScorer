@@ -1,8 +1,9 @@
 import { Team } from "./team";
 import { Round } from "./round";
+import type { uuid } from "../types";
 
 export class Match {
-  public id: string;
+  public id: uuid;
 
   public teamOne: Team;
 

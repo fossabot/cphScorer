@@ -1,14 +1,14 @@
 import { PlayerProvider, TeamProvider, RankingProvider, RoundProvider, MatchProvider } from "../../src"
-import { Player, Team, Ranking, RankingType, Round, Match } from "@cph-scorer/model"
+import { Player, Team, Ranking, RankingType, Round, Match, uuid } from "@cph-scorer/model"
 
 class mockPlayerProvider implements PlayerProvider {
   public players = [
-    new Player({ id: '0', register: false }),
-    new Player({ id: '1', register: false })
+    new Player({ id: '0-a-a-a-a', register: false }),
+    new Player({ id: '1-a-a-a-a', register: false })
   ]
 
   async list(): Promise<Player[]> { return [] }
-  async add(player: Partial<Player>): Promise<Player> { return { id: '', firstName: '', lastName: '', register: false } }
+  async add(player: Partial<Player>): Promise<Player> { return { id: 'a-a-a-a-a', firstName: '', lastName: '', register: false } }
 
   async listRegister(): Promise<Player[]> {
     return this.players
@@ -25,8 +25,8 @@ class mockPlayerProvider implements PlayerProvider {
 
 class mockTeamProvider implements TeamProvider {
   public teams = [
-    new Team({ id: '1', score: 0, players: [new Player({ id: '1' })] }),
-    new Team({ id: '2', score: 0, players: [new Player({ id: '3' })] }),
+    new Team({ id: '1-a-a-a-a', score: 0, players: [new Player({ id: '1-a-a-a-a' })] }),
+    new Team({ id: '2-a-a-a-a', score: 0, players: [new Player({ id: '3-a-a-a-a' })] }),
   ]
 
   async insert(players: Player[]): Promise<Team> {
@@ -45,22 +45,22 @@ class mockTeamProvider implements TeamProvider {
 class mockRanginkProvider implements RankingProvider {
   public rankings = [
     new Ranking({
-      id: '1',
-      players: [new Player({ id: '1' })],
+      id: '1-a-a-a-a',
+      players: [new Player({ id: '1-a-a-a-a' })],
       point: 10,
       goalAverage: 10,
       participation: 1
     }),
     new Ranking({
-      id: '3',
-      players: [new Player({ id: '3' })],
+      id: '3-a-a-a-a',
+      players: [new Player({ id: '3-a-a-a-a' })],
       point: 10,
       goalAverage: 10,
       participation: 1
     })
   ]
 
-  async findRanking(id: string, type: RankingType): Promise<Ranking> {
+  async findRanking(id: uuid, type: RankingType): Promise<Ranking> {
     const res = this.rankings.find(
       x => x.players?.filter(p => p.id === id).length !== 0
     ) || null
@@ -68,12 +68,12 @@ class mockRanginkProvider implements RankingProvider {
     return res as Ranking
   }
 
-  async update(id: string, ranking: Partial<Ranking>): Promise<void> {
+  async update(id: uuid, ranking: Partial<Ranking>): Promise<void> {
     const res = this.rankings.findIndex(
       x => x.players.filter(p => p.id === id).length !== 0
     )
     if (res === -1) this.rankings.push(new Ranking({
-      id: '2',
+      id: '2-a-a-a-a',
       ...ranking,
       players: []
     }))
@@ -83,14 +83,14 @@ class mockRanginkProvider implements RankingProvider {
   }
 
   async getRanking(type: RankingType): Promise<Ranking[]> { return [] }
-  async createRanking(player: Partial<Player>, type: RankingType) { return new Ranking({id: '2'}) }
+  async createRanking(player: Partial<Player>, type: RankingType) { return new Ranking({id: '2-a-a-a-a'}) }
 }
 
 class mockRoundProvider implements RoundProvider {
   public round = []
 
   async insert(roundNumber: number): Promise<Round> {
-    const round = new Round({ roundNumber, id: '' + roundNumber }) as Round
+    const round = new Round({ roundNumber, id: <uuid>('a-a-a-a-' + roundNumber) }) as Round
     this.round.push(round as never)
     return round
   }

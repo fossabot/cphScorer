@@ -1,7 +1,7 @@
 import { RankingProvider } from "@cph-scorer/core";
 import { Repository } from "typeorm";
 import { RankingEntity } from "../entity/ranking";
-import { RankingType, Ranking, Player } from "@cph-scorer/model";
+import { RankingType, Ranking, Player, uuid } from "@cph-scorer/model";
 import { PlayerEntity } from "../entity/player";
 
 export class RankingDao implements RankingProvider {
@@ -26,10 +26,10 @@ export class RankingDao implements RankingProvider {
       .getOne();
 
     if (res === undefined) return null;
-    return res.toRanking();
+    return res.toModel();
   }
 
-  public async update(id: string, ranking: Partial<Ranking>): Promise<void> {
+  public async update(id: uuid, ranking: Partial<Ranking>): Promise<void> {
     const r = await this.rankingRepository.findOneOrFail({
       where: { id, type: ranking.type },
     });
@@ -58,7 +58,7 @@ export class RankingDao implements RankingProvider {
           "ranking.participation": "ASC",
         })
         .getMany()
-    ).map((x) => x.toRanking());
+    ).map((x) => x.toModel());
   }
 
   public async createRanking(
@@ -67,10 +67,10 @@ export class RankingDao implements RankingProvider {
   ): Promise<Ranking> {
     const ranking = new RankingEntity();
     const playerEntity = new PlayerEntity();
-    playerEntity.fromPlayer(player);
+    playerEntity.fromModel(player);
 
     ranking.type = type;
     ranking.players = [playerEntity];
-    return (await this.rankingRepository.save(ranking)).toRanking();
+    return (await this.rankingRepository.save(ranking)).toModel();
   }
 }

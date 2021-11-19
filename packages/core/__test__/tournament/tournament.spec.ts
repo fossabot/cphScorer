@@ -12,13 +12,13 @@ describe('Torunament use case', () => {
     const useCase = new RegisterPlayer(player, rank)
 
     it('Register unknow player', () => {
-      return useCase.exec('00', RankingType.SEN).catch(e => expect(e).toBeInstanceOf(PlayerUnknowException))
+      return useCase.exec('00-a-a-a-a', RankingType.SEN).catch(e => expect(e).toBeInstanceOf(PlayerUnknowException))
     })
 
     it('Register new player', async () => {
-      await useCase.exec('0', RankingType.SEN)
+      await useCase.exec('0-a-a-a-a', RankingType.SEN)
 
-      const r = rank.rankings.find(x => x.id === '2')
+      const r = rank.rankings.find(x => x.id === '2-a-a-a-a')
 
       expect(rank.rankings.length).toBe(3)
       expect(r).toBeDefined()
@@ -28,9 +28,9 @@ describe('Torunament use case', () => {
     })
 
     it('Register old player', async () => {
-      await useCase.exec('1', RankingType.SEN)
+      await useCase.exec('1-a-a-a-a', RankingType.SEN)
 
-      const r = rank.rankings.find(x => x.id === '1')
+      const r = rank.rankings.find(x => x.id === '1-a-a-a-a')
 
       expect(rank.rankings.length).toBe(3)
       expect(r).toBeDefined()
@@ -44,7 +44,7 @@ describe('Torunament use case', () => {
       const spyUpdateRank = jest.spyOn(rank, 'update')
       const spyUpdatePlayer = jest.spyOn(player, 'update')
 
-      await useCase.exec('0', RankingType.SEN)
+      await useCase.exec('0-a-a-a-a', RankingType.SEN)
 
       expect(spyFind).toHaveBeenCalled()
       expect(spyUpdateRank).toHaveBeenCalled()
@@ -60,10 +60,10 @@ describe('Torunament use case', () => {
 
     beforeEach(() => {
       player.players = [
-        new Player({ id: '0', register: true }),
-        new Player({ id: '1', register: true }),
-        new Player({ id: '3', register: true }),
-        new Player({ id: '5', register: true })
+        new Player({ id: '0-a-a-a-a', register: true }),
+        new Player({ id: '1-a-a-a-a', register: true }),
+        new Player({ id: '3-a-a-a-a', register: true }),
+        new Player({ id: '5-a-a-a-a', register: true })
       ]
       team.teams = []
       match.match = []
@@ -85,7 +85,7 @@ describe('Torunament use case', () => {
     })
 
     it('Correct generation team size 3', async () => {
-      player.players.push(new Player({ id: '6', register: true }))
+      player.players.push(new Player({ id: '6-a-a-a-a', register: true }))
       await useCase.exec(1)
 
       expect(team.teams.length).toBe(2)
@@ -110,34 +110,34 @@ describe('Torunament use case', () => {
 
     it('Team 1 win', async () => {
       await useCase.exec(new Match({
-        teamOne: new Team({ id: '1', score: 13, players: [new Player({ id: '1' })] }),
-        teamTwo: new Team({ id: '2', score: 1, players: [new Player({ id: '3' })] }),
+        teamOne: new Team({ id: '1-a-a-a-a', score: 13, players: [new Player({ id: '1-a-a-a-a' })] }),
+        teamTwo: new Team({ id: '2-a-a-a-a', score: 1, players: [new Player({ id: '3-a-a-a-a' })] }),
       }), RankingType.SEN)
 
-      expect(team.teams.find(x => x.id === '1')?.score).toBe(13)
-      expect(team.teams.find(x => x.id === '2')?.score).toBe(1)
+      expect(team.teams.find(x => x.id === '1-a-a-a-a')?.score).toBe(13)
+      expect(team.teams.find(x => x.id === '2-a-a-a-a')?.score).toBe(1)
 
-      expect((await rank.findRanking('1', RankingType.SEN)).point).toBe(13)
-      expect((await rank.findRanking('1', RankingType.SEN)).goalAverage).toBe(22)
+      expect((await rank.findRanking('1-a-a-a-a', RankingType.SEN)).point).toBe(13)
+      expect((await rank.findRanking('1-a-a-a-a', RankingType.SEN)).goalAverage).toBe(22)
 
-      expect((await rank.findRanking('3', RankingType.SEN)).point).toBe(11)
-      expect((await rank.findRanking('3', RankingType.SEN)).goalAverage).toBe(-2)
+      expect((await rank.findRanking('3-a-a-a-a', RankingType.SEN)).point).toBe(11)
+      expect((await rank.findRanking('3-a-a-a-a', RankingType.SEN)).goalAverage).toBe(-2)
     })
 
     it('Team 2 win', async () => {
       await useCase.exec(new Match({
-        teamOne: new Team({ id: '1', score: 1, players: [new Player({ id: '1' })] }),
-        teamTwo: new Team({ id: '2', score: 13, players: [new Player({ id: '3' })] }),
+        teamOne: new Team({ id: '1-a-a-a-a', score: 1, players: [new Player({ id: '1-a-a-a-a' })] }),
+        teamTwo: new Team({ id: '2-a-a-a-a', score: 13, players: [new Player({ id: '3-a-a-a-a' })] }),
       }), RankingType.SEN)
 
-      expect(team.teams.find(x => x.id === '1')?.score).toBe(1)
-      expect(team.teams.find(x => x.id === '2')?.score).toBe(13)
+      expect(team.teams.find(x => x.id === '1-a-a-a-a')?.score).toBe(1)
+      expect(team.teams.find(x => x.id === '2-a-a-a-a')?.score).toBe(13)
 
-      expect((await rank.findRanking('1', RankingType.SEN)).point).toBe(14)
-      expect((await rank.findRanking('1', RankingType.SEN)).goalAverage).toBe(10)
+      expect((await rank.findRanking('1-a-a-a-a', RankingType.SEN)).point).toBe(14)
+      expect((await rank.findRanking('1-a-a-a-a', RankingType.SEN)).goalAverage).toBe(10)
 
-      expect((await rank.findRanking('3', RankingType.SEN)).point).toBe(14)
-      expect((await rank.findRanking('3', RankingType.SEN)).goalAverage).toBe(10)
+      expect((await rank.findRanking('3-a-a-a-a', RankingType.SEN)).point).toBe(14)
+      expect((await rank.findRanking('3-a-a-a-a', RankingType.SEN)).goalAverage).toBe(10)
     })
   })
 

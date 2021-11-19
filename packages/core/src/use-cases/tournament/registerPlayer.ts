@@ -1,5 +1,5 @@
 import { PlayerProvider } from "../../providers/player.provider";
-import { RankingType, Ranking, Player } from "@cph-scorer/model";
+import { RankingType, Ranking, Player, uuid } from "@cph-scorer/model";
 import { PlayerUnknowException } from "../../errors/PlayerUnknow";
 import { RankingProvider } from "../../providers/ranking.provider";
 
@@ -9,7 +9,7 @@ export class RegisterPlayer {
     private readonly rankingProvider: RankingProvider
   ) {}
 
-  public async exec(id: string, type: RankingType): Promise<void> {
+  public async exec(id: uuid, type: RankingType): Promise<void> {
     let idRanking = null;
     const player: Player = await this.playerProdvider.update(id, {
       register: true,
@@ -32,6 +32,6 @@ export class RegisterPlayer {
       point: lastRanking?.point ?? 0,
       goalAverage: lastRanking?.goalAverage ?? 0,
     };
-    await this.rankingProvider.update(ranking.id as string, ranking);
+    await this.rankingProvider.update(ranking.id as uuid, ranking);
   }
 }

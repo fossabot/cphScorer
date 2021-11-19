@@ -1,8 +1,9 @@
 import { Player } from "./player";
 import { RankingType } from "./rankingType";
+import type { uuid } from "../types";
 
 export class Ranking {
-  public id: string;
+  public id: uuid;
 
   public participation: number;
 

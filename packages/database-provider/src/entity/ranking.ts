@@ -1,5 +1,10 @@
-import { RankingType, Ranking } from "@cph-scorer/model";
-import { plainToClass } from "class-transformer";
+import {
+  RankingType,
+  Ranking,
+  uuid,
+  Convertor,
+  ModelConverter,
+} from "@cph-scorer/model";
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -10,9 +15,10 @@ import {
 import { PlayerEntity } from "./player";
 
 @Entity({ name: "ranking" })
-export class RankingEntity {
+@Convertor(Ranking, RankingEntity)
+export class RankingEntity extends ModelConverter {
   @PrimaryGeneratedColumn("uuid")
-  public id: string;
+  public id: uuid;
 
   @Column({ type: "int", default: 1 })
   public participation: number;
@@ -31,12 +37,4 @@ export class RankingEntity {
   })
   @JoinTable()
   public players: PlayerEntity[];
-
-  public toRanking(): Ranking {
-    return plainToClass(Ranking, this);
-  }
-
-  public fromRanking(plain: Partial<Ranking>): void {
-    Object.assign(this, plainToClass(RankingEntity, plain));
-  }
 }

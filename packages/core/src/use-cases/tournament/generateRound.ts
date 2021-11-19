@@ -1,7 +1,14 @@
 import { chain, chunk, intersection, flatten } from "lodash";
 import { Observable, lastValueFrom } from "rxjs";
 import { retry } from "rxjs/operators";
-import { Player } from "@cph-scorer/model";
+import {
+  Player,
+  SimpleRound,
+  SimpleTeam,
+  SimpleTournament,
+  TeamMate,
+  uuid,
+} from "@cph-scorer/model";
 import { PlayerProvider } from "../../providers/player.provider";
 import { MaxCallError } from "../../errors/MaxCallError";
 import { RoundProvider } from "../../providers/round.provider";
@@ -44,11 +51,11 @@ export class GenerateRound {
   private generate(
     numberOfRound: number,
     register: Player[]
-  ): Observable<Array<Array<[string[], string[]]>>> {
+  ): Observable<SimpleTournament> {
     return new Observable((sub) => {
       const oldTeammate = this.toMap(register);
 
-      const res = [];
+      const res: SimpleTournament = [];
 
       for (let i = 0; i < numberOfRound; i++) {
         res.push(this.drawRound(oldTeammate));
@@ -60,29 +67,27 @@ export class GenerateRound {
   }
 
   /**
-   * Convert register array to Record<uuid,uuid[]>
+   * Convert register array to TeamMate
    * @param players list of register player
-   * @returns Record<uuid,uuid[]>
+   * @returns {TeamMate}
    */
-  private toMap(players: Player[]): Record<string, string[]> {
+  private toMap(players: Player[]): TeamMate {
     return chain(players)
       .keyBy("id")
-      .mapValues(() => new Array<string>())
+      .mapValues(() => new Array<uuid>())
       .value();
   }
 
   /**
    * Generate one round
    * @param oldTeammate
-   * @returns round
+   * @returns {SimpleRound}
    */
-  private drawRound(
-    oldTeammate: Record<string, string[]>
-  ): Array<[string[], string[]]> {
-    const uuids = Object.keys(oldTeammate);
+  private drawRound(oldTeammate: TeamMate): SimpleRound {
+    const uuids = Object.keys(oldTeammate) as uuid[];
     const teamSize3 = uuids.length % 4;
     const teamSize2 = (uuids.length - teamSize3 * 3) / 2;
-    const teams = [];
+    const teams: SimpleTeam[] = [];
 
     for (let i = 0; i < teamSize3; i++) {
       teams.push(this.random(oldTeammate, uuids, 3));
@@ -99,15 +104,15 @@ export class GenerateRound {
    * @param oldTeammate
    * @param uuids
    * @param length
-   * @param limit - interal param limit of retry to block infinitie loop
-   * @returns team
+   * @param limit - internal param limit of retry to block infinitie loop
+   * @returns {SimpleTeam}
    */
   private random(
-    oldTeammate: Record<string, string[]>,
-    ids: string[],
+    oldTeammate: TeamMate,
+    ids: uuid[],
     length: number,
     limit = 50
-  ): string[] {
+  ): SimpleTeam {
     // block inifitie loop
     if (limit === 0) throw new MaxCallError(50);
 
@@ -121,10 +126,10 @@ export class GenerateRound {
     // check if team not already exist
     if (intersection(team, flatten(olds)).length === 0) {
       ids.splice(0, length);
-      team.forEach((mate: string) => {
+      team.forEach((mate: uuid) => {
         team
-          .filter((x: string) => x !== mate)
-          .forEach((x: string) => oldTeammate[x].push(mate));
+          .filter((x: uuid) => x !== mate)
+          .forEach((x: uuid) => oldTeammate[x].push(mate));
       });
       return team;
     } else {

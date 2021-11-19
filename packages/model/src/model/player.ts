@@ -1,5 +1,7 @@
+import type { uuid } from "../types";
+
 export class Player {
-  public id: string;
+  public id: uuid;
 
   public firstName: string;
 

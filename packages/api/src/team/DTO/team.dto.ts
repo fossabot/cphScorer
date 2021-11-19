@@ -1,4 +1,4 @@
-import { Team } from "@cph-scorer/model";
+import { Team, uuid } from "@cph-scorer/model";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsNumber, IsPositive, Max } from "class-validator";
 import { PlayerDTO } from "../../player/DTO/player.dto";
@@ -6,7 +6,7 @@ import { PlayerDTO } from "../../player/DTO/player.dto";
 export class TeamDTO extends Team {
   @ApiProperty()
   @IsNotEmpty()
-  public id: string;
+  public id: uuid;
 
   @ApiProperty()
   @IsNotEmpty()

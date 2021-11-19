@@ -38,7 +38,7 @@ describe('Player use case', () => {
     const useCase = new UpdatePlayer(provider)
     const spy = jest.spyOn(provider, 'update')
 
-    await useCase.execute('', {})
+    await useCase.execute('a-a-a-a-a', {})
 
     expect(useCase).toBeDefined()
     expect(spy).toHaveBeenCalled()

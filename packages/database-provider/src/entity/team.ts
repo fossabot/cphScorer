@@ -1,6 +1,5 @@
 import { PlayerEntity } from "./player";
-import { Team } from "@cph-scorer/model";
-import { plainToClass } from "class-transformer";
+import { Convertor, ModelConverter, Team, uuid } from "@cph-scorer/model";
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -10,9 +9,10 @@ import {
 } from "typeorm";
 
 @Entity({ name: "team" })
-export class TeamEntity {
+@Convertor(Team, TeamEntity)
+export class TeamEntity extends ModelConverter {
   @PrimaryGeneratedColumn("uuid")
-  public id: string;
+  public id: uuid;
 
   @Column({ type: "int", default: 0 })
   public score: number;
@@ -22,12 +22,4 @@ export class TeamEntity {
   })
   @JoinTable()
   public players: PlayerEntity[];
-
-  public toTeam(): Team {
-    return plainToClass(Team, this);
-  }
-
-  public fromTeam(plain: Partial<Team>): void {
-    Object.assign(this, plainToClass(TeamEntity, plain));
-  }
 }
